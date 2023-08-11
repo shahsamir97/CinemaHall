@@ -1,17 +1,26 @@
 package com.mdshahsamir.ovisharcinemahall.ui.movies
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.network.MovieAPIService
+import kotlinx.coroutines.flow.Flow
 
 interface MovieListRepository {
 
-    suspend fun fetchTopRatedMovies(): List<Movie>
+    fun fetchTopRatedMovies():  Flow<PagingData<Movie>>
 }
 
 class MovieListRepositoryImpl(private val movieAPIService: MovieAPIService): MovieListRepository {
 
-    override suspend fun fetchTopRatedMovies(): List<Movie> {
-            val response = movieAPIService.fetchTopRatedMovies()
-            return response.results
+    override fun fetchTopRatedMovies(): Flow<PagingData<Movie>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = MovieListPagingSource.PAGE_SIZE,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = { MovieListPagingSource(movieAPIService) }
+        ).flow
     }
 }

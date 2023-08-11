@@ -2,8 +2,8 @@ package com.mdshahsamir.ovisharcinemahall.ui.movies
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.mdshahsamir.ovisharcinemahall.BuildConfig
@@ -11,7 +11,7 @@ import com.mdshahsamir.ovisharcinemahall.databinding.MovieListItemBinding
 import com.mdshahsamir.ovisharcinemahall.model.Movie
 
 class MovieListAdapter(private val glideRequestManager: RequestManager) :
-    ListAdapter<Movie, MovieListAdapter.MovieViewHolder>(MovieDiffUtil) {
+    PagingDataAdapter<Movie, MovieListAdapter.MovieViewHolder>(MovieDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val binding = MovieListItemBinding.inflate(LayoutInflater.from(parent.context),
@@ -21,7 +21,7 @@ class MovieListAdapter(private val glideRequestManager: RequestManager) :
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        getItem(position)?.let { holder.bind(it) }
     }
 
     inner class MovieViewHolder(private val binding: MovieListItemBinding) :

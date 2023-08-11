@@ -1,10 +1,13 @@
 package com.mdshahsamir.ovisharcinemahall.ui.movies
 
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.mdshahsamir.ovisharcinemahall.base.BaseFragment
 import com.mdshahsamir.ovisharcinemahall.databinding.FragmentMovieListBinding
 import com.mdshahsamir.ovisharcinemahall.di.MovieListRepoDependencyInjector
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class MovieListFragment : BaseFragment<FragmentMovieListBinding>() {
 
@@ -25,9 +28,10 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>() {
     override fun observeData() {
         super.observeData()
 
-        viewModel.loadData()
-        viewModel.movieList.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
+        lifecycleScope.launch {
+            viewModel.movieList.collectLatest {
+                adapter.submitData(it)
+            }
         }
     }
 }

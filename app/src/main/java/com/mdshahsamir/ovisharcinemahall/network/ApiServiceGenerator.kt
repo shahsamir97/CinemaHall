@@ -19,7 +19,7 @@ object ApiServiceGenerator {
         .addInterceptor(loggingInterceptor)
         .addInterceptor(Interceptor { chain ->
             val newRequest: Request = chain.request().newBuilder()
-                .addHeader("Authorization", "Brearer ${BuildConfig.ACCESS_TOKEN}")
+                .addHeader("Authorization", "Bearer ${BuildConfig.ACCESS_TOKEN}")
                 .build()
             chain.proceed(newRequest)
         }).build()

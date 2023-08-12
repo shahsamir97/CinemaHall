@@ -1,10 +1,9 @@
 package com.mdshahsamir.ovisharcinemahall.ui.movies
 
+import android.graphics.drawable.AnimatedVectorDrawable
 import android.graphics.drawable.AnimationDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -19,8 +18,10 @@ class MovieListAdapter(private val glideRequestManager: RequestManager) :
     PagingDataAdapter<Movie, MovieListAdapter.MovieViewHolder>(MovieDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        val binding = MovieListItemBinding.inflate(LayoutInflater.from(parent.context),
-            parent, false)
+        val binding = MovieListItemBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent, false
+        )
 
         return MovieViewHolder(binding)
     }
@@ -32,8 +33,7 @@ class MovieListAdapter(private val glideRequestManager: RequestManager) :
     inner class MovieViewHolder(private val binding: MovieListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        private var isAdded = false
-        private lateinit var drawableAnimation: AnimationDrawable
+        private lateinit var drawableAnimation: AnimatedVectorDrawable
 
         fun bind(movie: Movie) {
             binding.titleTextView.text = movie.title
@@ -44,11 +44,19 @@ class MovieListAdapter(private val glideRequestManager: RequestManager) :
                 .into(binding.moviePosterImage)
 
             binding.imageView.apply {
-                setImageDrawable(ResourcesCompat.getDrawable(resources,R.drawable.add_to_wishlist_drawable, null))
-                drawableAnimation = drawable as AnimationDrawable
+                setImageDrawable(
+                    ResourcesCompat.getDrawable(
+                        resources,
+                        if (movie.isAddedToWishlist) R.drawable.avd_anim_reverse else R.drawable.avd_anim,
+                        null
+                    )
+                )
+
+                drawableAnimation = drawable as AnimatedVectorDrawable
             }
 
             binding.imageView.setOnClickListener {
+                movie.isAddedToWishlist = !movie.isAddedToWishlist
                 drawableAnimation.start()
             }
         }

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.mdshahsamir.ovisharcinemahall.BuildConfig
+import com.mdshahsamir.ovisharcinemahall.R
 import com.mdshahsamir.ovisharcinemahall.databinding.MovieListItemBinding
 import com.mdshahsamir.ovisharcinemahall.model.Movie
 
@@ -28,7 +29,9 @@ class MovieListAdapter(private val glideRequestManager: RequestManager) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movie: Movie) {
-            glideRequestManager.load(BuildConfig.IMAGE_BASE_URL + movie.poster_path).into(binding.moviePosterImage)
+            glideRequestManager.load(BuildConfig.IMAGE_BASE_URL + movie.poster_path)
+                .placeholder(R.drawable.loading_animation)
+                .into(binding.moviePosterImage)
         }
     }
 

@@ -1,7 +1,11 @@
 package com.mdshahsamir.ovisharcinemahall.ui.movies
 
+import android.graphics.drawable.AnimationDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -28,10 +32,25 @@ class MovieListAdapter(private val glideRequestManager: RequestManager) :
     inner class MovieViewHolder(private val binding: MovieListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        private var isAdded = false
+        private lateinit var drawableAnimation: AnimationDrawable
+
         fun bind(movie: Movie) {
+            binding.titleTextView.text = movie.title
+            binding.releaseDateTextView.text = movie.release_date
+
             glideRequestManager.load(BuildConfig.IMAGE_BASE_URL + movie.poster_path)
                 .placeholder(R.drawable.loading_animation)
                 .into(binding.moviePosterImage)
+
+            binding.imageView.apply {
+                setImageDrawable(ResourcesCompat.getDrawable(resources,R.drawable.add_to_wishlist_drawable, null))
+                drawableAnimation = drawable as AnimationDrawable
+            }
+
+            binding.imageView.setOnClickListener {
+                drawableAnimation.start()
+            }
         }
     }
 

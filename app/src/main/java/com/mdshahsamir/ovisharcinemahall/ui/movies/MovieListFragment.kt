@@ -28,7 +28,7 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>() {
     override fun observeData() {
         super.observeData()
 
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.movieList.collectLatest {
                 adapter.submitData(it)
             }

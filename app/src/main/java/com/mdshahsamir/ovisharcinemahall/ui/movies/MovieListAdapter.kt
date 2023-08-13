@@ -1,7 +1,6 @@
 package com.mdshahsamir.ovisharcinemahall.ui.movies
 
 import android.graphics.drawable.AnimatedVectorDrawable
-import android.graphics.drawable.AnimationDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
@@ -38,11 +37,24 @@ class MovieListAdapter(private val glideRequestManager: RequestManager) :
         fun bind(movie: Movie) {
             binding.titleTextView.text = movie.title
             binding.releaseDateTextView.text = movie.release_date
+            switchAnimDrawable(movie)
 
             glideRequestManager.load(BuildConfig.IMAGE_BASE_URL + movie.poster_path)
                 .placeholder(R.drawable.loading_animation)
                 .into(binding.moviePosterImage)
 
+            binding.imageView.setOnClickListener {
+                runAddToWishlistIconAnimation(movie)
+            }
+        }
+
+        private fun runAddToWishlistIconAnimation(movie: Movie) {
+            switchAnimDrawable(movie)
+            movie.isAddedToWishlist = !movie.isAddedToWishlist
+            drawableAnimation.start()
+        }
+
+        private fun switchAnimDrawable(movie: Movie) {
             binding.imageView.apply {
                 setImageDrawable(
                     ResourcesCompat.getDrawable(
@@ -53,11 +65,6 @@ class MovieListAdapter(private val glideRequestManager: RequestManager) :
                 )
 
                 drawableAnimation = drawable as AnimatedVectorDrawable
-            }
-
-            binding.imageView.setOnClickListener {
-                movie.isAddedToWishlist = !movie.isAddedToWishlist
-                drawableAnimation.start()
             }
         }
     }

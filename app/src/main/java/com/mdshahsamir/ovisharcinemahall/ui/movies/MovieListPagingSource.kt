@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.network.MovieAPIService
+import retrofit2.HttpException
 
 class MovieListPagingSource(private val movieAPIService: MovieAPIService) :
     PagingSource<Int, Movie>() {
@@ -23,7 +24,7 @@ class MovieListPagingSource(private val movieAPIService: MovieAPIService) :
                 prevKey = if (position == STARTING_INDEX) null else position - 1,
                 nextKey = if (response.results.isEmpty()) null else position + 1
             )
-        } catch (e: Exception) {
+        } catch (e: HttpException) {
             e.printStackTrace()
             LoadResult.Error(e)
         }

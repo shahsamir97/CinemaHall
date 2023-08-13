@@ -36,10 +36,10 @@ class MovieListAdapter(private val glideRequestManager: RequestManager) :
 
         fun bind(movie: Movie) {
             binding.titleTextView.text = movie.title
-            binding.releaseDateTextView.text = movie.release_date
+            binding.releaseDateTextView.text = movie.releaseDate
             switchAnimDrawable(movie)
 
-            glideRequestManager.load(BuildConfig.IMAGE_BASE_URL + movie.poster_path)
+            glideRequestManager.load(BuildConfig.IMAGE_BASE_URL + movie.posterPath)
                 .placeholder(R.drawable.loading_animation)
                 .into(binding.moviePosterImage)
 

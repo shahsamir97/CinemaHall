@@ -59,7 +59,7 @@ class MovieListAdapter(private val glideRequestManager: RequestManager) :
                 setImageDrawable(
                     ResourcesCompat.getDrawable(
                         resources,
-                        if (movie.isAddedToWishlist) R.drawable.avd_anim_reverse else R.drawable.avd_anim,
+                        if (movie.isAddedToWishlist) R.drawable.heart_to_add_animated_vector else R.drawable.add_to_heart_animated_vector,
                         null
                     )
                 )

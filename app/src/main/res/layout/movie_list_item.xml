@@ -30,7 +30,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/moviePosterImage"
-            app:srcCompat="@drawable/avd_anim" />
+            app:srcCompat="@drawable/add_to_heart_animated_vector" />
 
         <TextView
             android:id="@+id/titleTextView"

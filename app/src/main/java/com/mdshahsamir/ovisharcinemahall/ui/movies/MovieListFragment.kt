@@ -1,9 +1,11 @@
 package com.mdshahsamir.ovisharcinemahall.ui.movies
 
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.mdshahsamir.ovisharcinemahall.base.BaseFragment
+import com.mdshahsamir.ovisharcinemahall.base.BaseViewModel
 import com.mdshahsamir.ovisharcinemahall.databinding.FragmentMovieListBinding
 import com.mdshahsamir.ovisharcinemahall.di.MovieListRepoDependencyInjector
 import com.mdshahsamir.ovisharcinemahall.model.Movie
@@ -27,6 +29,8 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
     override fun getViewBinding(): FragmentMovieListBinding =
         FragmentMovieListBinding.inflate(layoutInflater)
 
+    override fun getViewModel(): BaseViewModel = viewModel
+
     override fun setUpViews() {
         binding.movieRecyclerView.adapter = adapter
     }
@@ -41,7 +45,15 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
         }
     }
 
-    override fun onClickMovie(movie: Movie) {
+    override fun onClickAddToWishlist(movie: Movie) {
         viewModel.addMovieToWishList(movie)
+    }
+
+    override fun onClickRemoveFromWishlist(movie: Movie) {
+        viewModel.removeFromWishList(movie)
+    }
+
+    override fun onClickMovie(movieId: Int) {
+        Log.i("Clicked On Movie ::", movieId.toString())
     }
 }

@@ -4,5 +4,9 @@ import com.mdshahsamir.ovisharcinemahall.model.Movie
 
 interface MovieListItemActionListener {
 
-    fun onClickMovie(movie: Movie)
+    fun onClickAddToWishlist(movie: Movie)
+
+    fun onClickRemoveFromWishlist(movie: Movie)
+
+    fun onClickMovie(movieId: Int)
 }

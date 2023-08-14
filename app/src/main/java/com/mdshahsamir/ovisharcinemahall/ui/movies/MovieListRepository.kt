@@ -13,6 +13,8 @@ interface MovieListRepository {
     fun fetchTopRatedMovies(): Flow<PagingData<Movie>>
 
     fun insertMovieToDB(movie: Movie)
+
+    fun deleteMovieFromDB(movie: Movie)
 }
 
 class MovieListRepositoryImpl(
@@ -32,5 +34,9 @@ class MovieListRepositoryImpl(
 
     override fun insertMovieToDB(movie: Movie) {
         movieDao.insertMovie(movie)
+    }
+
+    override fun deleteMovieFromDB(movie: Movie) {
+        movieDao.deleteMovie(movie)
     }
 }

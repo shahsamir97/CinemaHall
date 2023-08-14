@@ -10,7 +10,7 @@ import kotlinx.coroutines.withContext
 
 class MovieListViewModel(private val repository: MovieListRepository) : BaseViewModel() {
 
-    val movieList =  repository.fetchTopRatedMovies().cachedIn(viewModelScope)
+    val movieList = repository.fetchTopRatedMovies().cachedIn(viewModelScope)
 
     fun addMovieToWishList(movie: Movie) {
         viewModelScope.launch {
@@ -19,4 +19,13 @@ class MovieListViewModel(private val repository: MovieListRepository) : BaseView
             }
         }
     }
+
+    fun removeFromWishList(movie: Movie) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                repository.deleteMovieFromDB(movie)
+            }
+        }
+    }
 }
+

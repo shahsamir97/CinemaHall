@@ -13,7 +13,10 @@ import com.mdshahsamir.ovisharcinemahall.R
 import com.mdshahsamir.ovisharcinemahall.databinding.MovieListItemBinding
 import com.mdshahsamir.ovisharcinemahall.model.Movie
 
-class MovieListAdapter(private val glideRequestManager: RequestManager) :
+class MovieListAdapter(
+    private val glideRequestManager: RequestManager,
+    private val itemActionListener: MovieListItemActionListener
+) :
     PagingDataAdapter<Movie, MovieListAdapter.MovieViewHolder>(MovieDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -45,6 +48,7 @@ class MovieListAdapter(private val glideRequestManager: RequestManager) :
 
             binding.imageView.setOnClickListener {
                 runAddToWishlistIconAnimation(movie)
+                itemActionListener.onClickMovie(movie)
             }
         }
 

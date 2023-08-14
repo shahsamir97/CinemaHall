@@ -3,16 +3,22 @@ package com.mdshahsamir.ovisharcinemahall.ui.movies
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import com.mdshahsamir.ovisharcinemahall.database.MovieDao
 import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.network.MovieAPIService
 import kotlinx.coroutines.flow.Flow
 
 interface MovieListRepository {
 
-    fun fetchTopRatedMovies():  Flow<PagingData<Movie>>
+    fun fetchTopRatedMovies(): Flow<PagingData<Movie>>
+
+    fun insertMovieToDB(movie: Movie)
 }
 
-class MovieListRepositoryImpl(private val movieAPIService: MovieAPIService): MovieListRepository {
+class MovieListRepositoryImpl(
+    private val movieAPIService: MovieAPIService,
+    private val movieDao: MovieDao
+) : MovieListRepository {
 
     override fun fetchTopRatedMovies(): Flow<PagingData<Movie>> {
         return Pager(
@@ -22,5 +28,9 @@ class MovieListRepositoryImpl(private val movieAPIService: MovieAPIService): Mov
             ),
             pagingSourceFactory = { MovieListPagingSource(movieAPIService) }
         ).flow
+    }
+
+    override fun insertMovieToDB(movie: Movie) {
+        movieDao.insertMovie(movie)
     }
 }

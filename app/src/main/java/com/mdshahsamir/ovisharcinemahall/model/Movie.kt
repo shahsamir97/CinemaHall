@@ -1,11 +1,13 @@
 package com.mdshahsamir.ovisharcinemahall.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
+@Entity
 data class Movie(
     val adult: Boolean,
-    @SerializedName("genre_ids")
-    val listOfGenreId: List<Int>,
+    @PrimaryKey
     val id: Int,
     @SerializedName("original_language")
     val originalLanguage: String,

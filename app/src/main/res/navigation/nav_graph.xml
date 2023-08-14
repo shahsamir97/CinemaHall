@@ -10,4 +10,9 @@
         android:name="com.mdshahsamir.ovisharcinemahall.ui.movies.MovieListFragment"
         android:label="@string/movies"
         tools:layout="@layout/fragment_movie_list" />
+    <fragment
+        android:id="@+id/wishlistFragment"
+        android:name="com.mdshahsamir.ovisharcinemahall.ui.wishlist.WishlistFragment"
+        android:label="Wishlist"
+        tools:layout="@layout/fragment_wishlist" />
 </navigation>

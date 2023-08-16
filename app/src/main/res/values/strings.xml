@@ -7,4 +7,5 @@
     <string name="home">Home</string>
     <string name="wishlist">Wishlist</string>
     <string name="failed_to_add_or_remove_from_wishlist">Failed to add/remove from wishlist</string>
+    <string name="your_wishlist_is_empty">Your Wishlist is Empty</string>
 </resources>

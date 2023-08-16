@@ -1,5 +1,6 @@
 package com.mdshahsamir.ovisharcinemahall.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -17,5 +18,5 @@ interface MovieDao {
     fun deleteMovie(movie: Movie)
 
     @Query("SELECT * FROM movie")
-    fun getAllMovie(): List<Movie>
+    fun getAllMovie(): LiveData<List<Movie>>
 }

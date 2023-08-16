@@ -4,13 +4,13 @@ import android.content.Context
 import com.mdshahsamir.ovisharcinemahall.database.AppDatabase
 import com.mdshahsamir.ovisharcinemahall.network.ApiServiceGenerator
 import com.mdshahsamir.ovisharcinemahall.network.MovieAPIService
-import com.mdshahsamir.ovisharcinemahall.ui.movies.MovieListRepository
-import com.mdshahsamir.ovisharcinemahall.ui.movies.MovieListRepositoryImpl
+import com.mdshahsamir.ovisharcinemahall.ui.shared.SharedRepository
+import com.mdshahsamir.ovisharcinemahall.ui.shared.SharedRepositoryIml
 
-class MovieListRepoDependencyInjector(private val context: Context) {
+class SharedRepositoryInjector(private val context: Context) {
 
-    fun getMovieListRepository(): MovieListRepository {
-        return MovieListRepositoryImpl(getMovieApiService(), getMovieDao())
+    fun getSharedRepository(): SharedRepository {
+        return SharedRepositoryIml(getMovieApiService(), getMovieDao())
     }
 
     private fun getMovieApiService() =

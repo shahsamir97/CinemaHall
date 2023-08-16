@@ -1,14 +1,18 @@
-package com.mdshahsamir.ovisharcinemahall.ui.movies
+package com.mdshahsamir.ovisharcinemahall.ui.shared
 
+import androidx.lifecycle.LiveData
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.mdshahsamir.ovisharcinemahall.database.MovieDao
 import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.network.MovieAPIService
+import com.mdshahsamir.ovisharcinemahall.ui.movies.MovieListPagingSource
 import kotlinx.coroutines.flow.Flow
 
-interface MovieListRepository {
+interface SharedRepository {
+
+    fun fetchWishListFromDB(): LiveData<List<Movie>>
 
     fun fetchTopRatedMovies(): Flow<PagingData<Movie>>
 
@@ -17,12 +21,13 @@ interface MovieListRepository {
     fun deleteMovieFromDB(movie: Movie)
 }
 
-class MovieListRepositoryImpl(
+class SharedRepositoryIml(
     private val movieAPIService: MovieAPIService,
     private val movieDao: MovieDao
-) : MovieListRepository {
+) : SharedRepository {
 
     override fun fetchTopRatedMovies(): Flow<PagingData<Movie>> {
+
         return Pager(
             config = PagingConfig(
                 pageSize = MovieListPagingSource.PAGE_SIZE,
@@ -31,6 +36,8 @@ class MovieListRepositoryImpl(
             pagingSourceFactory = { MovieListPagingSource(movieAPIService) }
         ).flow
     }
+
+    override fun fetchWishListFromDB(): LiveData<List<Movie>> = movieDao.getAllMovie()
 
     override fun insertMovieToDB(movie: Movie) {
         movieDao.insertMovie(movie)

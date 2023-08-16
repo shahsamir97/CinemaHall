@@ -1,14 +1,16 @@
 package com.mdshahsamir.ovisharcinemahall.ui.movies
 
 import android.util.Log
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.mdshahsamir.ovisharcinemahall.base.BaseFragment
 import com.mdshahsamir.ovisharcinemahall.base.BaseViewModel
 import com.mdshahsamir.ovisharcinemahall.databinding.FragmentMovieListBinding
-import com.mdshahsamir.ovisharcinemahall.di.MovieListRepoDependencyInjector
+import com.mdshahsamir.ovisharcinemahall.di.SharedRepositoryInjector
 import com.mdshahsamir.ovisharcinemahall.model.Movie
+import com.mdshahsamir.ovisharcinemahall.ui.shared.SharedViewModelFactory
+import com.mdshahsamir.ovisharcinemahall.ui.shared.SharedViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -19,17 +21,14 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
         MovieListAdapter(Glide.with(requireContext()), this)
     }
 
-    private val viewModel: MovieListViewModel by viewModels {
-        MovieListViewModelFactory(
-            MovieListRepoDependencyInjector(requireContext().applicationContext)
-                .getMovieListRepository()
-        )
+    private val sharedViewModel: SharedViewModel by activityViewModels {
+        SharedViewModelFactory(SharedRepositoryInjector(requireContext()).getSharedRepository())
     }
 
     override fun getViewBinding(): FragmentMovieListBinding =
         FragmentMovieListBinding.inflate(layoutInflater)
 
-    override fun getViewModel(): BaseViewModel = viewModel
+    override fun getViewModel(): BaseViewModel = sharedViewModel
 
     override fun setUpViews() {
         binding.movieRecyclerView.adapter = adapter
@@ -39,18 +38,22 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
         super.observeData()
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.movieList.collectLatest {
+            sharedViewModel.movieList.collectLatest {
                 adapter.submitData(it)
             }
+        }
+
+        sharedViewModel.wishList.observe(viewLifecycleOwner) {
+
         }
     }
 
     override fun onClickAddToWishlist(movie: Movie) {
-        viewModel.addMovieToWishList(movie)
+        sharedViewModel.addMovieToWishList(movie)
     }
 
     override fun onClickRemoveFromWishlist(movie: Movie) {
-        viewModel.removeFromWishList(movie)
+        sharedViewModel.removeFromWishList(movie)
     }
 
     override fun onClickMovie(movieId: Int) {

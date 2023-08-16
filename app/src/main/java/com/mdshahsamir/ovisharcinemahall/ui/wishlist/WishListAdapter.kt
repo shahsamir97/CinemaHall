@@ -9,15 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.mdshahsamir.ovisharcinemahall.BuildConfig
 import com.mdshahsamir.ovisharcinemahall.R
-import com.mdshahsamir.ovisharcinemahall.databinding.MovieListItemBinding
 import com.mdshahsamir.ovisharcinemahall.databinding.WishlistItemBinding
 import com.mdshahsamir.ovisharcinemahall.model.Movie
 
 class WishListAdapter(
     private val glideRequestManager: RequestManager,
     private val itemActionListener: WishListItemActionListener
-) :
-   ListAdapter<Movie, WishListAdapter.WishListViewHolder>(MovieDiffUtil) {
+): ListAdapter<Movie, WishListAdapter.WishListViewHolder>(MovieDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WishListViewHolder {
         val binding = WishlistItemBinding.inflate(
@@ -49,7 +47,7 @@ class WishListAdapter(
 
             binding.imageView.setOnClickListener {
                 try {
-                    itemActionListener.removeFromWishList(movie, position)
+                    itemActionListener.removeFromWishList(movie)
                 }
                 catch (e: Exception) {
                     e.printStackTrace()

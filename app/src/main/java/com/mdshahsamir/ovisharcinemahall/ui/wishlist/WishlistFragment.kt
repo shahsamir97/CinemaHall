@@ -1,5 +1,6 @@
 package com.mdshahsamir.ovisharcinemahall.ui.wishlist
 
+import android.view.View
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 import com.mdshahsamir.ovisharcinemahall.base.BaseFragment
@@ -34,6 +35,7 @@ class WishlistFragment : BaseFragment<FragmentWishlistBinding>(), WishListItemAc
         super.observeData()
 
         sharedViewModel.wishList.observe(viewLifecycleOwner) {
+            binding.emptyWishListText.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
             adapter.submitList(it)
         }
     }

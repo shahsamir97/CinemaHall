@@ -1,4 +1,4 @@
-package com.mdshahsamir.ovisharcinemahall.ui.wishlist
+package com.mdshahsamir.ovisharcinemahall.ui.dashboard.wishlist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -1,4 +1,4 @@
-package com.mdshahsamir.ovisharcinemahall.ui.movies
+package com.mdshahsamir.ovisharcinemahall.ui.dashboard.home
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState

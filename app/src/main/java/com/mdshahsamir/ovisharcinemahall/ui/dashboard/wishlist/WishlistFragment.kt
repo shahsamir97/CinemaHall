@@ -1,4 +1,4 @@
-package com.mdshahsamir.ovisharcinemahall.ui.wishlist
+package com.mdshahsamir.ovisharcinemahall.ui.dashboard.wishlist
 
 import android.view.View
 import androidx.fragment.app.activityViewModels
@@ -8,13 +8,13 @@ import com.mdshahsamir.ovisharcinemahall.base.BaseViewModel
 import com.mdshahsamir.ovisharcinemahall.databinding.FragmentWishlistBinding
 import com.mdshahsamir.ovisharcinemahall.di.SharedRepositoryInjector
 import com.mdshahsamir.ovisharcinemahall.model.Movie
-import com.mdshahsamir.ovisharcinemahall.ui.shared.SharedViewModel
-import com.mdshahsamir.ovisharcinemahall.ui.shared.SharedViewModelFactory
+import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModel
+import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModelFactory
 
 class WishlistFragment : BaseFragment<FragmentWishlistBinding>(), WishListItemActionListener {
 
-    private val sharedViewModel: SharedViewModel by activityViewModels {
-        SharedViewModelFactory(SharedRepositoryInjector(requireContext()).getSharedRepository())
+    private val sharedViewModel: DashboardViewModel by activityViewModels {
+        DashboardViewModelFactory(SharedRepositoryInjector(requireContext()).getSharedRepository())
     }
 
     private val adapter: WishListAdapter by lazy {

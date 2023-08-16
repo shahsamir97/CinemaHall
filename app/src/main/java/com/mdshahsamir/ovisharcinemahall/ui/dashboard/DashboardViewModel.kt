@@ -1,4 +1,4 @@
-package com.mdshahsamir.ovisharcinemahall.ui.shared
+package com.mdshahsamir.ovisharcinemahall.ui.dashboard
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class SharedViewModel(private val repo: SharedRepository): BaseViewModel() {
+class DashboardViewModel(private val repo: SharedRepository): BaseViewModel() {
 
     val movieList: Flow<PagingData<Movie>> = repo.fetchTopRatedMovies().cachedIn(viewModelScope).map{ pagingData ->
         pagingData.map { movie ->

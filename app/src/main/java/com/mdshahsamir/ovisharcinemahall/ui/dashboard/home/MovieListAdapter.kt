@@ -1,4 +1,4 @@
-package com.mdshahsamir.ovisharcinemahall.ui.movies
+package com.mdshahsamir.ovisharcinemahall.ui.dashboard.home
 
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.view.LayoutInflater

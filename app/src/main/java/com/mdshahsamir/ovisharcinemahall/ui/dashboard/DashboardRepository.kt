@@ -1,4 +1,4 @@
-package com.mdshahsamir.ovisharcinemahall.ui.shared
+package com.mdshahsamir.ovisharcinemahall.ui.dashboard
 
 import androidx.lifecycle.LiveData
 import androidx.paging.Pager
@@ -7,7 +7,7 @@ import androidx.paging.PagingData
 import com.mdshahsamir.ovisharcinemahall.database.MovieDao
 import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.network.MovieAPIService
-import com.mdshahsamir.ovisharcinemahall.ui.movies.MovieListPagingSource
+import com.mdshahsamir.ovisharcinemahall.ui.dashboard.home.MovieListPagingSource
 import kotlinx.coroutines.flow.Flow
 
 interface SharedRepository {

@@ -4,8 +4,8 @@ import android.content.Context
 import com.mdshahsamir.ovisharcinemahall.database.AppDatabase
 import com.mdshahsamir.ovisharcinemahall.network.ApiServiceGenerator
 import com.mdshahsamir.ovisharcinemahall.network.MovieAPIService
-import com.mdshahsamir.ovisharcinemahall.ui.shared.SharedRepository
-import com.mdshahsamir.ovisharcinemahall.ui.shared.SharedRepositoryIml
+import com.mdshahsamir.ovisharcinemahall.ui.dashboard.SharedRepository
+import com.mdshahsamir.ovisharcinemahall.ui.dashboard.SharedRepositoryIml
 
 class SharedRepositoryInjector(private val context: Context) {
 

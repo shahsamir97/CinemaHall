@@ -1,4 +1,4 @@
-package com.mdshahsamir.ovisharcinemahall.ui.movies
+package com.mdshahsamir.ovisharcinemahall.ui.dashboard.home
 
 import android.util.Log
 import androidx.fragment.app.activityViewModels
@@ -9,8 +9,8 @@ import com.mdshahsamir.ovisharcinemahall.base.BaseViewModel
 import com.mdshahsamir.ovisharcinemahall.databinding.FragmentMovieListBinding
 import com.mdshahsamir.ovisharcinemahall.di.SharedRepositoryInjector
 import com.mdshahsamir.ovisharcinemahall.model.Movie
-import com.mdshahsamir.ovisharcinemahall.ui.shared.SharedViewModelFactory
-import com.mdshahsamir.ovisharcinemahall.ui.shared.SharedViewModel
+import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModelFactory
+import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -21,8 +21,8 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
         MovieListAdapter(Glide.with(requireContext()), this)
     }
 
-    private val sharedViewModel: SharedViewModel by activityViewModels {
-        SharedViewModelFactory(SharedRepositoryInjector(requireContext()).getSharedRepository())
+    private val sharedViewModel: DashboardViewModel by activityViewModels {
+        DashboardViewModelFactory(SharedRepositoryInjector(requireContext()).getSharedRepository())
     }
 
     override fun getViewBinding(): FragmentMovieListBinding =

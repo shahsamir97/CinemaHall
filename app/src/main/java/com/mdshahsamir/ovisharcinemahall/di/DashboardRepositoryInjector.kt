@@ -7,7 +7,7 @@ import com.mdshahsamir.ovisharcinemahall.network.MovieAPIService
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.SharedRepository
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.SharedRepositoryIml
 
-class SharedRepositoryInjector(private val context: Context) {
+class DashboardRepositoryInjector(private val context: Context) {
 
     fun getSharedRepository(): SharedRepository {
         return SharedRepositoryIml(getMovieApiService(), getMovieDao())

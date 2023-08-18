@@ -6,7 +6,7 @@ import com.bumptech.glide.Glide
 import com.mdshahsamir.ovisharcinemahall.base.BaseFragment
 import com.mdshahsamir.ovisharcinemahall.base.BaseViewModel
 import com.mdshahsamir.ovisharcinemahall.databinding.FragmentWishlistBinding
-import com.mdshahsamir.ovisharcinemahall.di.SharedRepositoryInjector
+import com.mdshahsamir.ovisharcinemahall.di.DashboardRepositoryInjector
 import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModel
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModelFactory
@@ -14,7 +14,7 @@ import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModelFactory
 class WishlistFragment : BaseFragment<FragmentWishlistBinding>(), WishListItemActionListener {
 
     private val sharedViewModel: DashboardViewModel by activityViewModels {
-        DashboardViewModelFactory(SharedRepositoryInjector(requireContext()).getSharedRepository())
+        DashboardViewModelFactory(DashboardRepositoryInjector(requireContext()).getSharedRepository())
     }
 
     private val adapter: WishListAdapter by lazy {

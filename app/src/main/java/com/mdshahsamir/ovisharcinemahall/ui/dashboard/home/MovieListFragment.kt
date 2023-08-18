@@ -7,7 +7,7 @@ import com.bumptech.glide.Glide
 import com.mdshahsamir.ovisharcinemahall.base.BaseFragment
 import com.mdshahsamir.ovisharcinemahall.base.BaseViewModel
 import com.mdshahsamir.ovisharcinemahall.databinding.FragmentMovieListBinding
-import com.mdshahsamir.ovisharcinemahall.di.SharedRepositoryInjector
+import com.mdshahsamir.ovisharcinemahall.di.DashboardRepositoryInjector
 import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModelFactory
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModel
@@ -22,7 +22,7 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
     }
 
     private val sharedViewModel: DashboardViewModel by activityViewModels {
-        DashboardViewModelFactory(SharedRepositoryInjector(requireContext()).getSharedRepository())
+        DashboardViewModelFactory(DashboardRepositoryInjector(requireContext()).getSharedRepository())
     }
 
     override fun getViewBinding(): FragmentMovieListBinding =
@@ -43,9 +43,7 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
             }
         }
 
-        sharedViewModel.wishList.observe(viewLifecycleOwner) {
-
-        }
+        sharedViewModel.wishList.observe(viewLifecycleOwner) {}
     }
 
     override fun onClickAddToWishlist(movie: Movie) {

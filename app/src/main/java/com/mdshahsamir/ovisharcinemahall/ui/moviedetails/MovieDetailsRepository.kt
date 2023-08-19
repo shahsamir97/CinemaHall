@@ -16,6 +16,8 @@ class MovieDetailsRepositoryImpl(private val apiService: MovieAPIService) : Movi
        return apiService.fetchMovieDetails(movieId)
     }
 
-    override fun fetchRecommendedMovies() {}
+    override fun fetchRecommendedMovies() {
+
+    }
 
 }

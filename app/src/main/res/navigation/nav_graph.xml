@@ -9,10 +9,18 @@
         android:id="@+id/movieListFragment"
         android:name="com.mdshahsamir.ovisharcinemahall.ui.dashboard.home.MovieListFragment"
         android:label="@string/movies"
-        tools:layout="@layout/fragment_movie_list" />
+        tools:layout="@layout/fragment_movie_list" >
+        <action
+            android:id="@+id/action_movieListFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
+    </fragment>
     <fragment
-        android:id="@+id/wishlistFragment"
-        android:name="com.mdshahsamir.ovisharcinemahall.ui.dashboard.wishlist.WishlistFragment"
-        android:label="Wishlist"
-        tools:layout="@layout/fragment_wishlist" />
+        android:id="@+id/movieDetailsFragment"
+        android:name="com.mdshahsamir.ovisharcinemahall.ui.moviedetails.MovieDetailsFragment"
+        android:label="fragment_movie_details"
+        tools:layout="@layout/fragment_movie_details" >
+        <argument
+            android:name="movieId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

@@ -1,8 +1,8 @@
 package com.mdshahsamir.ovisharcinemahall.ui.dashboard.home
 
-import android.util.Log
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.mdshahsamir.ovisharcinemahall.base.BaseFragment
 import com.mdshahsamir.ovisharcinemahall.base.BaseViewModel
@@ -55,6 +55,7 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
     }
 
     override fun onClickMovie(movieId: Int) {
-        Log.i("Clicked On Movie ::", movieId.toString())
+         val action = MovieListFragmentDirections.actionMovieListFragmentToMovieDetailsFragment(movieId)
+        findNavController().navigate(action)
     }
 }

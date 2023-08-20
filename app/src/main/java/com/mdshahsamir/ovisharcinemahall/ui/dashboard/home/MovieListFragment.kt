@@ -1,8 +1,10 @@
 package com.mdshahsamir.ovisharcinemahall.ui.dashboard.home
 
+import android.util.Log
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.PagingSource
 import com.bumptech.glide.Glide
 import com.mdshahsamir.ovisharcinemahall.base.BaseFragment
 import com.mdshahsamir.ovisharcinemahall.base.BaseViewModel
@@ -13,6 +15,7 @@ import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModelFactory
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
     MovieListItemActionListener {
@@ -38,8 +41,8 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
         super.observeData()
 
         viewLifecycleOwner.lifecycleScope.launch {
-            sharedViewModel.movieList.collectLatest {
-                adapter.submitData(it)
+            sharedViewModel.movieList.collectLatest { pagingData ->
+                adapter.submitData(pagingData)
             }
         }
 

@@ -18,4 +18,6 @@
     <string name="failed_to_load">Failed To Load</string>
     <string name="user_score">User Score</string>
     <string name="play_trailer">Play Trailer</string>
+    <string name="overview">Overview</string>
+    <string name="percentage_sign">%d\%</string>
 </resources>

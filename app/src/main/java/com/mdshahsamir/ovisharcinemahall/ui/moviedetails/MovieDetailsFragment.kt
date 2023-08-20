@@ -15,7 +15,6 @@ import com.mdshahsamir.ovisharcinemahall.databinding.FragmentMovieDetailsBinding
 import com.mdshahsamir.ovisharcinemahall.di.MovieDetailsRepoDependencyInjector
 import com.mdshahsamir.ovisharcinemahall.model.MovieDetailsResponse
 import kotlinx.coroutines.launch
-import java.util.zip.GZIPOutputStream
 
 class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>() {
 
@@ -25,7 +24,8 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>() {
 
     val args: MovieDetailsFragmentArgs by navArgs()
 
-    override fun getViewBinding(): FragmentMovieDetailsBinding = FragmentMovieDetailsBinding.inflate(layoutInflater)
+    override fun getViewBinding(): FragmentMovieDetailsBinding =
+        FragmentMovieDetailsBinding.inflate(layoutInflater)
 
     override fun getViewModel(): BaseViewModel = viewModel
 
@@ -43,11 +43,13 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>() {
                 viewModel.uiState.collect { uiState ->
                     when (uiState) {
                         is MovieDetailsUiState.Loading -> {
-                           binding.dataLoadingProgressBar.visibility = View.VISIBLE
+                            showLoader()
                         }
+
                         is MovieDetailsUiState.Success -> {
                             showMovieDetails(uiState.movieDetails)
                         }
+
                         is MovieDetailsUiState.Error -> {
                             showErrorMessage()
                         }
@@ -65,8 +67,8 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>() {
         movieDetails?.let { movie ->
             binding.titleTextView.text = movie.title
             binding.overviewTextView.text = movie.overview
-            binding.popularityTextView.text = (movie.popularity.toInt() * 10).toString()
-            binding.popularityProgressBar.progress = movie.popularity.toInt() * 10
+            binding.popularityTextView.text = (movie.voteAverage * 10).toInt().toString() + "%"
+            binding.popularityProgressBar.progress = (movie.voteAverage * 10).toInt()
 
             Glide.with(requireContext()).load(BuildConfig.IMAGE_BASE_URL + movie.posterPath)
                 .placeholder(R.drawable.loading_animation)
@@ -75,8 +77,13 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>() {
             Glide.with(requireContext()).load(BuildConfig.IMAGE_BASE_URL + movie.backdropPath)
                 .placeholder(R.drawable.loading_animation)
                 .into(binding.backgroundPosterImageView)
-
         }
+    }
+
+    private fun showLoader() {
+        binding.errorMessageTextView.visibility = View.GONE
+        binding.movieDetailsLayout.visibility = View.GONE
+        binding.dataLoadingProgressBar.visibility = View.VISIBLE
     }
 
     private fun showErrorMessage() {

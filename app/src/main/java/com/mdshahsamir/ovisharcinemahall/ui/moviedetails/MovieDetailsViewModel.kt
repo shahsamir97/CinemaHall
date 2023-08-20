@@ -6,7 +6,6 @@ import com.mdshahsamir.ovisharcinemahall.model.MovieDetailsResponse
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
 
 class MovieDetailsViewModel(private val repo: MovieDetailsRepository) : BaseViewModel() {
 
@@ -17,11 +16,13 @@ class MovieDetailsViewModel(private val repo: MovieDetailsRepository) : BaseView
     fun loadMovieDetails(movieId: Int) {
         _uiState.value = MovieDetailsUiState.Loading
         viewModelScope.launch {
+            val movieDetailsResult = repo.fetchMovieDetails(movieId)
 
-            try {
-                _uiState.value = MovieDetailsUiState.Success(repo.fetchMovieDetails(movieId))
-            } catch (e: HttpException) {
-                _uiState.value = MovieDetailsUiState.Error(e)
+            if (movieDetailsResult.isSuccess) {
+                _uiState.value = MovieDetailsUiState.Success(movieDetailsResult.getOrNull())
+            } else {
+                _uiState.value =
+                    MovieDetailsUiState.Error(movieDetailsResult.exceptionOrNull() ?: Exception())
             }
         }
     }
@@ -29,7 +30,7 @@ class MovieDetailsViewModel(private val repo: MovieDetailsRepository) : BaseView
 
 sealed class MovieDetailsUiState {
 
-     object Loading: MovieDetailsUiState()
-    data class Success(val movieDetails: MovieDetailsResponse?): MovieDetailsUiState()
-    data class Error(val exception: Throwable): MovieDetailsUiState()
+    object Loading : MovieDetailsUiState()
+    data class Success(val movieDetails: MovieDetailsResponse?) : MovieDetailsUiState()
+    data class Error(val exception: Throwable) : MovieDetailsUiState()
 }

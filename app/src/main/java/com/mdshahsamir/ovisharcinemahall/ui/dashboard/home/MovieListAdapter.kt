@@ -6,13 +6,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.mdshahsamir.ovisharcinemahall.BuildConfig
 import com.mdshahsamir.ovisharcinemahall.R
 import com.mdshahsamir.ovisharcinemahall.databinding.MovieListItemBinding
 import com.mdshahsamir.ovisharcinemahall.model.Movie
+import com.mdshahsamir.ovisharcinemahall.util.MovieDiffUtil
+import com.mdshahsamir.ovisharcinemahall.util.formatDateToDDMMMMYYYY
 
 class MovieListAdapter(
     private val glideRequestManager: RequestManager,
@@ -40,7 +41,7 @@ class MovieListAdapter(
 
         fun bind(movie: Movie) {
             binding.titleTextView.text = movie.title
-            binding.releaseDateTextView.text = movie.releaseDate
+            binding.releaseDateTextView.text = formatDateToDDMMMMYYYY(movie.releaseDate)
             switchAnimDrawable(movie)
 
             glideRequestManager.load(BuildConfig.IMAGE_BASE_URL + movie.posterPath)
@@ -90,16 +91,6 @@ class MovieListAdapter(
 
                 drawableAnimation = drawable as AnimatedVectorDrawable
             }
-        }
-    }
-
-    object MovieDiffUtil : DiffUtil.ItemCallback<Movie>() {
-        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem == newItem
         }
     }
 }

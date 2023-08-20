@@ -17,16 +17,24 @@
     <fragment
         android:id="@+id/movieDetailsFragment"
         android:name="com.mdshahsamir.ovisharcinemahall.ui.moviedetails.MovieDetailsFragment"
-        android:label="fragment_movie_details"
+        android:label="Movie Details"
         tools:layout="@layout/fragment_movie_details" >
         <argument
             android:name="movieId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_movieDetailsFragment_self"
+            app:destination="@id/movieDetailsFragment"
+            app:launchSingleTop="true"/>
     </fragment>
 
     <fragment
         android:id="@+id/wishlistFragment"
         android:name="com.mdshahsamir.ovisharcinemahall.ui.dashboard.wishlist.WishlistFragment"
-        android:label="fragment_wishlist"
-        tools:layout="@layout/fragment_wishlist" />
+        android:label="Wishlist"
+        tools:layout="@layout/fragment_wishlist" >
+        <action
+            android:id="@+id/action_wishlistFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
+    </fragment>
 </navigation>

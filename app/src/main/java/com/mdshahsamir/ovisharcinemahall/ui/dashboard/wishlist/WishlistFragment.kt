@@ -2,6 +2,7 @@ package com.mdshahsamir.ovisharcinemahall.ui.dashboard.wishlist
 
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.mdshahsamir.ovisharcinemahall.base.BaseFragment
 import com.mdshahsamir.ovisharcinemahall.base.BaseViewModel
@@ -44,5 +45,8 @@ class WishlistFragment : BaseFragment<FragmentWishlistBinding>(), WishListItemAc
         sharedViewModel.removeFromWishList(movie)
     }
 
-    override fun onClickMovie(movieId: Int) {}
+    override fun onClickMovie(movieId: Int) {
+        val action = WishlistFragmentDirections.actionWishlistFragmentToMovieDetailsFragment(movieId)
+        findNavController().navigate(action)
+    }
 }

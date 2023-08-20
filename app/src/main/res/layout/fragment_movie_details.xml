@@ -9,7 +9,9 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:nestedScrollingEnabled="true"
+        android:paddingBottom="16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/movieDetailsLayout"
@@ -58,9 +60,12 @@
 
             <TextView
                 android:id="@+id/titleTextView"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:textAlignment="center"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -84,11 +89,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
+                app:layout_constraintTop_toTopOf="@+id/view"
+                app:layout_constraintBottom_toBottomOf="@+id/view"
                 android:text="@string/user_score"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/textView5"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toTopOf="@+id/view" />
+                tools:layout_editor_absoluteY="397dp" />
 
             <ImageView
                 android:id="@+id/imageView5"
@@ -98,7 +104,8 @@
                 android:src="@drawable/baseline_play_arrow_24"
                 app:layout_constraintBottom_toBottomOf="@+id/userScoreTitleTextView"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toTopOf="@+id/userScoreTitleTextView" />
+                app:layout_constraintTop_toTopOf="@+id/userScoreTitleTextView"
+                app:tint="?attr/colorPrimary" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -116,7 +123,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.5" />
+                app:layout_constraintGuide_percent="0.50121653" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -124,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/overview"
-                android:textSize="16sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -146,13 +153,13 @@
                 android:id="@+id/view"
                 android:layout_width="2dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:background="@android:color/darker_gray"
                 app:layout_constraintBottom_toTopOf="@+id/textView5"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toBottomOf="@+id/titleTextView"
+                app:layout_constraintTop_toBottomOf="@+id/genreTextView"
                 tools:ignore="MissingConstraints" />
 
             <TextView
@@ -165,6 +172,44 @@
                 app:layout_constraintTop_toTopOf="@+id/popularityProgressBar"
                 tools:text="11" />
 
+            <TextView
+                android:id="@+id/genreTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/titleTextView"
+                app:layout_constraintStart_toStartOf="@+id/titleTextView"
+                app:layout_constraintTop_toBottomOf="@+id/titleTextView"
+                tools:text="Action • Thriller • Drama" />
+
+            <TextView
+                android:id="@+id/recommendedMoviesTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Recommended Movies"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/overviewTextView" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recommendedMovieRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recommendedMoviesTitle"
+                app:spanCount="2"
+                tools:itemCount="5"
+                tools:listitem="@layout/recommended_movies_list_item" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
@@ -174,7 +219,8 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"
+        tools:visibility="gone"/>
 
     <TextView
         android:id="@+id/errorMessageTextView"
@@ -182,6 +228,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="@string/failed_to_load"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        tools:visibility="gone"/>
 
 </RelativeLayout>

@@ -5,6 +5,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.mdshahsamir.ovisharcinemahall.BuildConfig
@@ -13,16 +14,23 @@ import com.mdshahsamir.ovisharcinemahall.base.BaseFragment
 import com.mdshahsamir.ovisharcinemahall.base.BaseViewModel
 import com.mdshahsamir.ovisharcinemahall.databinding.FragmentMovieDetailsBinding
 import com.mdshahsamir.ovisharcinemahall.di.MovieDetailsRepoDependencyInjector
+import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.model.MovieDetailsResponse
+import com.mdshahsamir.ovisharcinemahall.util.getDottedText
+import com.mdshahsamir.ovisharcinemahall.util.getYearFromApiDate
 import kotlinx.coroutines.launch
 
-class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>() {
+class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(), RecommendedMovieActionListener {
 
     private val viewModel: MovieDetailsViewModel by viewModels {
         MovieDetailsViewModelFactory(MovieDetailsRepoDependencyInjector.getMovieListRepository())
     }
 
-    val args: MovieDetailsFragmentArgs by navArgs()
+    private val adapter: RecommendedMoviesAdapter by lazy {
+        RecommendedMoviesAdapter(Glide.with(requireContext()), this)
+    }
+
+    private val args: MovieDetailsFragmentArgs by navArgs()
 
     override fun getViewBinding(): FragmentMovieDetailsBinding =
         FragmentMovieDetailsBinding.inflate(layoutInflater)
@@ -33,6 +41,7 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>() {
         super.setUpViews()
 
         viewModel.loadMovieDetails(args.movieId)
+        viewModel.loadRecommendedMovies(args.movieId)
     }
 
     override fun observeData() {
@@ -46,8 +55,12 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>() {
                             showLoader()
                         }
 
-                        is MovieDetailsUiState.Success -> {
+                        is MovieDetailsUiState.MovieDetailsSuccess -> {
                             showMovieDetails(uiState.movieDetails)
+                        }
+
+                        is MovieDetailsUiState.RecommendedMoviesSuccess -> {
+                            showRecommendedMovies(uiState.movies)
                         }
 
                         is MovieDetailsUiState.Error -> {
@@ -59,16 +72,24 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>() {
         }
     }
 
+    private fun showRecommendedMovies(movies: List<Movie>) {
+        binding.recommendedMoviesTitle.visibility = View.VISIBLE
+        binding.recommendedMovieRecyclerView.visibility = View.VISIBLE
+        binding.recommendedMovieRecyclerView.adapter = adapter
+        adapter.submitList(movies)
+    }
+
     private fun showMovieDetails(movieDetails: MovieDetailsResponse?) {
         binding.dataLoadingProgressBar.visibility = View.GONE
         binding.errorMessageTextView.visibility = View.GONE
         binding.movieDetailsLayout.visibility = View.VISIBLE
 
         movieDetails?.let { movie ->
-            binding.titleTextView.text = movie.title
+            binding.titleTextView.text = movie.title + "(${getYearFromApiDate(movie.releaseDate)})"
             binding.overviewTextView.text = movie.overview
             binding.popularityTextView.text = (movie.voteAverage * 10).toInt().toString() + "%"
             binding.popularityProgressBar.progress = (movie.voteAverage * 10).toInt()
+            binding.genreTextView.text = getDottedText(movie.genres.map { it.name })
 
             Glide.with(requireContext()).load(BuildConfig.IMAGE_BASE_URL + movie.posterPath)
                 .placeholder(R.drawable.loading_animation)
@@ -90,5 +111,10 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>() {
         binding.errorMessageTextView.visibility = View.VISIBLE
         binding.dataLoadingProgressBar.visibility = View.GONE
         binding.movieDetailsLayout.visibility = View.GONE
+    }
+
+    override fun onClickMovie(movieId: Int) {
+        val action = MovieDetailsFragmentDirections.actionMovieDetailsFragmentSelf(movieId)
+        findNavController().navigate(action)
     }
 }

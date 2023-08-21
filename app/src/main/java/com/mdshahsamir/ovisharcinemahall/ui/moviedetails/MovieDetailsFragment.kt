@@ -22,45 +22,35 @@ import kotlinx.coroutines.launch
 
 class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(), RecommendedMovieActionListener {
 
+    private val args: MovieDetailsFragmentArgs by navArgs()
+
     private val viewModel: MovieDetailsViewModel by viewModels {
-        MovieDetailsViewModelFactory(MovieDetailsRepoDependencyInjector.getMovieListRepository())
+        MovieDetailsViewModelFactory(args.movieId, MovieDetailsRepoDependencyInjector.getMovieListRepository())
     }
 
     private val adapter: RecommendedMoviesAdapter by lazy {
         RecommendedMoviesAdapter(Glide.with(requireContext()), this)
     }
 
-    private val args: MovieDetailsFragmentArgs by navArgs()
-
     override fun getViewBinding(): FragmentMovieDetailsBinding =
         FragmentMovieDetailsBinding.inflate(layoutInflater)
 
     override fun getViewModel(): BaseViewModel = viewModel
-
-    override fun setUpViews() {
-        super.setUpViews()
-
-        viewModel.loadMovieDetails(args.movieId)
-        viewModel.loadRecommendedMovies(args.movieId)
-    }
 
     override fun observeData() {
         super.observeData()
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect { uiState ->
+                viewModel.movieDetailsFlow.collect { uiState ->
                     when (uiState) {
                         is MovieDetailsUiState.Loading -> {
                             showLoader()
                         }
 
-                        is MovieDetailsUiState.MovieDetailsSuccess -> {
+                        is MovieDetailsUiState.Success -> {
                             showMovieDetails(uiState.movieDetails)
-                        }
-
-                        is MovieDetailsUiState.RecommendedMoviesSuccess -> {
-                            showRecommendedMovies(uiState.movies)
+                            showRecommendedMovies(uiState.recommendedMovies)
                         }
 
                         is MovieDetailsUiState.Error -> {

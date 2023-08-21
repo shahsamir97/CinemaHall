@@ -15,8 +15,7 @@ import com.mdshahsamir.ovisharcinemahall.util.formatDateToDDMMMMYYYY
 class RecommendedMoviesAdapter(
     private val glideRequestManager: RequestManager,
     private val actionListener: RecommendedMovieActionListener
-) :
-    ListAdapter<Movie, RecommendedMoviesAdapter.RecommendedMovieViewHolder>(MovieDiffUtil) {
+) : ListAdapter<Movie, RecommendedMoviesAdapter.RecommendedMovieViewHolder>(MovieDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecommendedMovieViewHolder {
         val binding = RecommendedMoviesListItemBinding.inflate(

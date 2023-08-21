@@ -21,10 +21,10 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:menu="@menu/top_appbar_menu"
+            app:buttonGravity="center_vertical"
             app:title="Title" />
 
     </com.google.android.material.appbar.AppBarLayout>
-
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"

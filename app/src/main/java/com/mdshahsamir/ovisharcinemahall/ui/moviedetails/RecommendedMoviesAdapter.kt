@@ -10,6 +10,7 @@ import com.mdshahsamir.ovisharcinemahall.BuildConfig
 import com.mdshahsamir.ovisharcinemahall.R
 import com.mdshahsamir.ovisharcinemahall.databinding.RecommendedMoviesListItemBinding
 import com.mdshahsamir.ovisharcinemahall.model.Movie
+import com.mdshahsamir.ovisharcinemahall.util.formatDateToDDMMMMYYYY
 
 class RecommendedMoviesAdapter(
     private val glideRequestManager: RequestManager,
@@ -36,7 +37,7 @@ class RecommendedMoviesAdapter(
 
         fun bind(movie: Movie) {
             binding.titleTextView.text = movie.title
-            binding.releaseDateTextView.text = movie.releaseDate
+            binding.releaseDateTextView.text = formatDateToDDMMMMYYYY(movie.releaseDate)
 
             glideRequestManager.load(BuildConfig.IMAGE_BASE_URL + movie.posterPath)
                 .placeholder(R.drawable.loading_animation)

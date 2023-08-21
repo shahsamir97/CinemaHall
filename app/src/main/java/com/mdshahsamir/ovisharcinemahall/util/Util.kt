@@ -3,6 +3,7 @@ package com.mdshahsamir.ovisharcinemahall.util
 import android.icu.text.SimpleDateFormat
 import androidx.recyclerview.widget.DiffUtil
 import com.mdshahsamir.ovisharcinemahall.model.Movie
+import java.text.ParseException
 import java.util.Locale
 
 fun getDottedText(list: List<String>): String {
@@ -16,11 +17,16 @@ fun getDottedText(list: List<String>): String {
 }
 
 fun formatDateToDDMMMMYYYY(inputDate: String): String {
-    val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-    val outputFormat = SimpleDateFormat("MMMM dd, yyyy", Locale.US)
+    return try {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+        val outputFormat = SimpleDateFormat("MMMM dd, yyyy", Locale.US)
 
-    val date = inputFormat.parse(inputDate)
-    return outputFormat.format(date!!)
+        val date = inputFormat.parse(inputDate)
+        outputFormat.format(date!!)
+    } catch (e: ParseException) {
+        e.printStackTrace()
+        ""
+    }
 }
 
 fun getYearFromApiDate(inputDate: String): String {

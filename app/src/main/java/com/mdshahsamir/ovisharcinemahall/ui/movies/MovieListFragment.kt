@@ -1,7 +1,9 @@
 package com.mdshahsamir.ovisharcinemahall.ui.movies
 
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import com.bumptech.glide.Glide
 import com.mdshahsamir.ovisharcinemahall.base.BaseFragment
 import com.mdshahsamir.ovisharcinemahall.databinding.FragmentMovieListBinding
@@ -15,11 +17,12 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>() {
         MovieListAdapter(Glide.with(requireContext()))
     }
 
-    private val viewModel : MovieListViewModel by viewModels {
+    private val viewModel: MovieListViewModel by viewModels {
         MovieListViewModelFactory(MovieListRepoDependencyInjector.getMovieListRepository())
     }
 
-    override fun getViewBinding(): FragmentMovieListBinding = FragmentMovieListBinding.inflate(layoutInflater)
+    override fun getViewBinding(): FragmentMovieListBinding =
+        FragmentMovieListBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
         binding.movieRecyclerView.adapter = adapter
@@ -32,6 +35,10 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>() {
             viewModel.movieList.collectLatest {
                 adapter.submitData(it)
             }
+        }
+
+        adapter.addLoadStateListener {
+            binding.progressBar.isVisible = it.refresh is LoadState.Loading
         }
     }
 }

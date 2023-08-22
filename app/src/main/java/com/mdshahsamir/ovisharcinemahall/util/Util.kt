@@ -1,10 +1,10 @@
 package com.mdshahsamir.ovisharcinemahall.util
 
-import android.icu.text.SimpleDateFormat
 import androidx.recyclerview.widget.DiffUtil
 import com.mdshahsamir.ovisharcinemahall.model.Movie
-import java.text.ParseException
-import java.util.Locale
+
+const val API_DATE_FORMAT = "yyyy-MM-dd"
+const val DISPLAY_DATE_FORMAT = "MMMM dd, yyyy"
 
 fun getDottedText(list: List<String>): String {
     var dottedString = ""
@@ -14,27 +14,6 @@ fun getDottedText(list: List<String>): String {
     }
 
     return dottedString
-}
-
-fun formatDateToDDMMMMYYYY(inputDate: String): String {
-    return try {
-        val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-        val outputFormat = SimpleDateFormat("MMMM dd, yyyy", Locale.US)
-
-        val date = inputFormat.parse(inputDate)
-        outputFormat.format(date!!)
-    } catch (e: ParseException) {
-        e.printStackTrace()
-        ""
-    }
-}
-
-fun getYearFromApiDate(inputDate: String): String {
-    val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-    val outputFormat = SimpleDateFormat("yyyy", Locale.US)
-
-    val date = inputFormat.parse(inputDate)
-    return outputFormat.format(date!!)
 }
 
 object MovieDiffUtil : DiffUtil.ItemCallback<Movie>() {

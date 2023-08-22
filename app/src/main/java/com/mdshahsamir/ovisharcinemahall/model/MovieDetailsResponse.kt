@@ -1,6 +1,9 @@
 package com.mdshahsamir.ovisharcinemahall.model
 
+import android.icu.text.SimpleDateFormat
 import com.google.gson.annotations.SerializedName
+import com.mdshahsamir.ovisharcinemahall.util.API_DATE_FORMAT
+import java.util.Locale
 
 data class MovieDetailsResponse(
     val adult: Boolean,
@@ -36,4 +39,12 @@ data class MovieDetailsResponse(
     val voteAverage: Double,
     @SerializedName("vote_count")
     val voteCount: Int
-)
+) {
+    fun getReleaseYear(): String {
+        val inputFormat = SimpleDateFormat(API_DATE_FORMAT, Locale.US)
+        val outputFormat = SimpleDateFormat("yyyy", Locale.US)
+
+        val date = inputFormat.parse(releaseDate)
+        return outputFormat.format(date!!)
+    }
+}

@@ -17,7 +17,6 @@ import com.mdshahsamir.ovisharcinemahall.di.MovieDetailsRepoDependencyInjector
 import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.model.MovieDetailsResponse
 import com.mdshahsamir.ovisharcinemahall.util.getDottedText
-import com.mdshahsamir.ovisharcinemahall.util.getYearFromApiDate
 import kotlinx.coroutines.launch
 
 class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(), RecommendedMovieActionListener {
@@ -75,7 +74,7 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(), Recomm
         binding.movieDetailsLayout.visibility = View.VISIBLE
 
         movieDetails?.let { movie ->
-            binding.titleTextView.text = movie.title + "(${getYearFromApiDate(movie.releaseDate)})"
+            binding.titleTextView.text = movie.title + " (${movie.getReleaseYear()})"
             binding.overviewTextView.text = movie.overview
             binding.popularityTextView.text = (movie.voteAverage * 10).toInt().toString() + "%"
             binding.popularityProgressBar.progress = (movie.voteAverage * 10).toInt()

@@ -12,8 +12,9 @@ import com.mdshahsamir.ovisharcinemahall.BuildConfig
 import com.mdshahsamir.ovisharcinemahall.R
 import com.mdshahsamir.ovisharcinemahall.databinding.MovieListItemBinding
 import com.mdshahsamir.ovisharcinemahall.model.Movie
+import com.mdshahsamir.ovisharcinemahall.util.API_DATE_FORMAT
 import com.mdshahsamir.ovisharcinemahall.util.MovieDiffUtil
-import com.mdshahsamir.ovisharcinemahall.util.formatDateToDDMMMMYYYY
+import com.mdshahsamir.ovisharcinemahall.util.toDisplayableDateFormat
 
 class MovieListAdapter(
     private val glideRequestManager: RequestManager,
@@ -41,7 +42,7 @@ class MovieListAdapter(
 
         fun bind(movie: Movie) {
             binding.titleTextView.text = movie.title
-            binding.releaseDateTextView.text = formatDateToDDMMMMYYYY(movie.releaseDate)
+            binding.releaseDateTextView.text = movie.releaseDate.toDisplayableDateFormat(API_DATE_FORMAT)
             switchAnimDrawable(movie)
 
             glideRequestManager.load(BuildConfig.IMAGE_BASE_URL + movie.posterPath)

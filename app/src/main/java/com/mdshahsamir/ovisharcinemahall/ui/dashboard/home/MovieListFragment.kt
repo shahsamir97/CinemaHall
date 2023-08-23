@@ -1,11 +1,17 @@
 package com.mdshahsamir.ovisharcinemahall.ui.dashboard.home
 
+import android.graphics.Color
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.mdshahsamir.ovisharcinemahall.R
 import com.mdshahsamir.ovisharcinemahall.base.BaseFragment
 import com.mdshahsamir.ovisharcinemahall.base.BaseViewModel
 import com.mdshahsamir.ovisharcinemahall.databinding.FragmentMovieListBinding
@@ -33,6 +39,7 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
     override fun getViewModel(): BaseViewModel = sharedViewModel
 
     override fun setUpViews() {
+        setHasOptionsMenu(true)
         binding.movieRecyclerView.adapter = adapter
     }
 
@@ -48,6 +55,41 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
         adapter.addLoadStateListener {
             binding.progressBar.isVisible = it.refresh == LoadState.Loading
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.top_app_bar_menu, menu)
+        val searchItem = menu.findItem(R.id.search)
+        val searchView = searchItem.actionView as androidx.appcompat.widget.SearchView
+        searchView.queryHint = getString(R.string.search_movies)
+
+        val textView: TextView =  searchView.findViewById(androidx.appcompat.R.id.search_src_text)
+        textView.apply {
+            setTextColor(Color.WHITE)
+            setHintTextColor(Color.WHITE)
+        }
+
+        searchView.setOnQueryTextListener(object :
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let {  }
+
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let {  }
+
+                return true
+            }
+        })
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            //R.id.search ->
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onClickAddToWishlist(movie: Movie) {

@@ -1,7 +1,9 @@
 package com.mdshahsamir.ovisharcinemahall.ui.dashboard.home
 
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.mdshahsamir.ovisharcinemahall.base.BaseFragment
@@ -43,7 +45,9 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
             }
         }
 
-        sharedViewModel.wishList.observe(viewLifecycleOwner) {}
+        adapter.addLoadStateListener {
+            binding.progressBar.isVisible = it.refresh == LoadState.Loading
+        }
     }
 
     override fun onClickAddToWishlist(movie: Movie) {

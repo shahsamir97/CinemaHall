@@ -2,7 +2,7 @@ package com.mdshahsamir.ovisharcinemahall.model
 
 import com.google.gson.annotations.SerializedName
 
-data class TopRatedMoviesResponse(
+data class ListOfMoviesResponse(
     val page: Int,
     val results: List<Movie>,
     @SerializedName("total_pages")

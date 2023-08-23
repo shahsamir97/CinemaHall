@@ -3,7 +3,6 @@ package com.mdshahsamir.ovisharcinemahall.ui.dashboard.wishlist
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
@@ -11,6 +10,7 @@ import com.mdshahsamir.ovisharcinemahall.BuildConfig
 import com.mdshahsamir.ovisharcinemahall.R
 import com.mdshahsamir.ovisharcinemahall.databinding.WishlistItemBinding
 import com.mdshahsamir.ovisharcinemahall.model.Movie
+import com.mdshahsamir.ovisharcinemahall.util.MovieDiffUtil
 
 class WishListAdapter(
     private val glideRequestManager: RequestManager,
@@ -58,16 +58,6 @@ class WishListAdapter(
                     ).show()
                 }
             }
-        }
-    }
-
-    object MovieDiffUtil : DiffUtil.ItemCallback<Movie>() {
-        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem == newItem
         }
     }
 }

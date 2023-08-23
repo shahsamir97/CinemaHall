@@ -1,8 +1,9 @@
-package com.mdshahsamir.ovisharcinemahall.ui.movies
+package com.mdshahsamir.ovisharcinemahall.ui.dashboard.home
 
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -13,7 +14,10 @@ import com.mdshahsamir.ovisharcinemahall.R
 import com.mdshahsamir.ovisharcinemahall.databinding.MovieListItemBinding
 import com.mdshahsamir.ovisharcinemahall.model.Movie
 
-class MovieListAdapter(private val glideRequestManager: RequestManager) :
+class MovieListAdapter(
+    private val glideRequestManager: RequestManager,
+    private val itemActionListener: MovieListItemActionListener
+) :
     PagingDataAdapter<Movie, MovieListAdapter.MovieViewHolder>(MovieDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -43,8 +47,28 @@ class MovieListAdapter(private val glideRequestManager: RequestManager) :
                 .placeholder(R.drawable.loading_animation)
                 .into(binding.moviePosterImage)
 
+            binding.root.setOnClickListener {
+                itemActionListener.onClickMovie(movie.id)
+            }
+
             binding.imageView.setOnClickListener {
-                runAddToWishlistIconAnimation(movie)
+                try {
+                    if (movie.isAddedToWishlist) {
+                        itemActionListener.onClickRemoveFromWishlist(movie)
+                    } else {
+                        itemActionListener.onClickAddToWishlist(movie)
+                    }
+
+                    runAddToWishlistIconAnimation(movie)
+                }
+                catch (e: Exception) {
+                    e.printStackTrace()
+                    Toast.makeText(
+                        binding.root.context,
+                        binding.root.context.getString(R.string.failed_to_add_or_remove_from_wishlist),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
 

@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         bottomNav = findViewById(R.id.bottomNavigationView)
 
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            if (destination.id == R.id.movieDetailsFragment) {
+            if (destination.id == R.id.movieDetailsFragment || destination.id == R.id.searchFragment) {
                 bottomNav.visibility = View.GONE
             } else {
                 bottomNav.visibility = View.VISIBLE

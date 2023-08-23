@@ -1,15 +1,13 @@
 package com.mdshahsamir.ovisharcinemahall.ui.dashboard.home
 
-import android.graphics.Color
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.LoadState
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import com.bumptech.glide.Glide
 import com.mdshahsamir.ovisharcinemahall.R
 import com.mdshahsamir.ovisharcinemahall.base.BaseFragment
@@ -59,36 +57,17 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.top_app_bar_menu, menu)
-        val searchItem = menu.findItem(R.id.search)
-        val searchView = searchItem.actionView as androidx.appcompat.widget.SearchView
-        searchView.queryHint = getString(R.string.search_movies)
-
-        val textView: TextView =  searchView.findViewById(androidx.appcompat.R.id.search_src_text)
-        textView.apply {
-            setTextColor(Color.WHITE)
-            setHintTextColor(Color.WHITE)
-        }
-
-        searchView.setOnQueryTextListener(object :
-            androidx.appcompat.widget.SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let {  }
-
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                newText?.let {  }
-
-                return true
-            }
-        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            //R.id.search ->
+            R.id.search -> {
+                sharedViewModel.allMovies = adapter.snapshot().items.sortedBy { it.title }
+                sharedViewModel.filteredMovies.value = sharedViewModel.allMovies
+                findNavController().navigate(R.id.action_movieListFragment_to_searchFragment)
+            }
         }
+
         return super.onOptionsItemSelected(item)
     }
 

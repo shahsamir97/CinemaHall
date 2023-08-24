@@ -36,37 +36,39 @@ class SearchListAdapter(
         private lateinit var drawableAnimation: AnimatedVectorDrawable
 
         fun bind(movie: Movie) {
-            binding.titleTextView.text = movie.title
-            binding.releaseDateTextView.text = movie.releaseDate.toDisplayableDateFormat(
-                API_DATE_FORMAT
-            )
-            switchAnimDrawable(movie)
+            binding.apply {
+                titleTextView.text = movie.title
+                releaseDateTextView.text = movie.releaseDate.toDisplayableDateFormat(
+                    API_DATE_FORMAT
+                )
+                switchAnimDrawable(movie)
 
-            glideRequestManager.load(BuildConfig.IMAGE_BASE_URL + movie.posterPath)
-                .placeholder(R.drawable.loading_animation)
-                .into(binding.moviePosterImage)
+                glideRequestManager.load(BuildConfig.IMAGE_BASE_URL + movie.posterPath)
+                    .placeholder(R.drawable.loading_animation)
+                    .into(moviePosterImage)
 
-            binding.root.setOnClickListener {
-                itemActionListener.onClickMovie(movie.id)
-            }
-
-            binding.imageView.setOnClickListener {
-                try {
-                    if (movie.isAddedToWishlist) {
-                        itemActionListener.onClickRemoveFromWishlist(movie)
-                    } else {
-                        itemActionListener.onClickAddToWishlist(movie)
-                    }
-
-                    runAddToWishlistIconAnimation(movie)
+                root.setOnClickListener {
+                    itemActionListener.onClickMovie(movie.id)
                 }
-                catch (e: Exception) {
-                    e.printStackTrace()
-                    Toast.makeText(
-                        binding.root.context,
-                        binding.root.context.getString(R.string.failed_to_add_or_remove_from_wishlist),
-                        Toast.LENGTH_SHORT
-                    ).show()
+
+                imageView.setOnClickListener {
+                    try {
+                        if (movie.isAddedToWishlist) {
+                            itemActionListener.onClickRemoveFromWishlist(movie)
+                        } else {
+                            itemActionListener.onClickAddToWishlist(movie)
+                        }
+
+                        runAddToWishlistIconAnimation(movie)
+                    }
+                    catch (e: Exception) {
+                        e.printStackTrace()
+                        Toast.makeText(
+                            root.context,
+                            root.context.getString(R.string.failed_to_add_or_remove_from_wishlist),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
         }

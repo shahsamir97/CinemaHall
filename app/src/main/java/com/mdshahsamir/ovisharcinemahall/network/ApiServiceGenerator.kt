@@ -31,7 +31,6 @@ object ApiServiceGenerator {
         .client(okHttpClient)
         .build()
 
-
     fun <T> createService(apiService: Class<T>): T {
         return retrofit.create(apiService)
     }

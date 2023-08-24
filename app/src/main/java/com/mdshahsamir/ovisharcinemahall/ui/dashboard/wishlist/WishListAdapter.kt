@@ -27,35 +27,37 @@ class WishListAdapter(
     }
 
     override fun onBindViewHolder(holder: WishListViewHolder, position: Int) {
-        getItem(position)?.let { holder.bind(it, position) }
+        getItem(position)?.let { holder.bind(it) }
     }
 
     inner class WishListViewHolder(private val binding: WishlistItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(movie: Movie, position: Int) {
-            binding.titleTextView.text = movie.title
-            binding.releaseDateTextView.text = movie.releaseDate
+        fun bind(movie: Movie) {
+            binding.apply {
+                titleTextView.text = movie.title
+                releaseDateTextView.text = movie.releaseDate
 
-            glideRequestManager.load(BuildConfig.IMAGE_BASE_URL + movie.posterPath)
-                .placeholder(R.drawable.loading_animation)
-                .into(binding.moviePosterImage)
+                glideRequestManager.load(BuildConfig.IMAGE_BASE_URL + movie.posterPath)
+                    .placeholder(R.drawable.loading_animation)
+                    .into(moviePosterImage)
 
-            binding.root.setOnClickListener {
-                itemActionListener.onClickMovie(movie.id)
-            }
-
-            binding.imageView.setOnClickListener {
-                try {
-                    itemActionListener.removeFromWishList(movie)
+                root.setOnClickListener {
+                    itemActionListener.onClickMovie(movie.id)
                 }
-                catch (e: Exception) {
-                    e.printStackTrace()
-                    Toast.makeText(
-                        binding.root.context,
-                        binding.root.context.getString(R.string.failed_to_add_or_remove_from_wishlist),
-                        Toast.LENGTH_SHORT
-                    ).show()
+
+                imageView.setOnClickListener {
+                    try {
+                        itemActionListener.removeFromWishList(movie)
+                    }
+                    catch (e: Exception) {
+                        e.printStackTrace()
+                        Toast.makeText(
+                            root.context,
+                            binding.root.context.getString(R.string.failed_to_add_or_remove_from_wishlist),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
         }

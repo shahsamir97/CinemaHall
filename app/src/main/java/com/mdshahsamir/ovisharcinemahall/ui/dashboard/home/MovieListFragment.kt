@@ -1,11 +1,15 @@
 package com.mdshahsamir.ovisharcinemahall.ui.dashboard.home
 
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.LoadState
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import com.bumptech.glide.Glide
+import com.mdshahsamir.ovisharcinemahall.R
 import com.mdshahsamir.ovisharcinemahall.base.BaseFragment
 import com.mdshahsamir.ovisharcinemahall.base.BaseViewModel
 import com.mdshahsamir.ovisharcinemahall.databinding.FragmentMovieListBinding
@@ -33,6 +37,7 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
     override fun getViewModel(): BaseViewModel = sharedViewModel
 
     override fun setUpViews() {
+        setHasOptionsMenu(true)
         binding.movieRecyclerView.adapter = adapter
     }
 
@@ -48,6 +53,22 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
         adapter.addLoadStateListener {
             binding.progressBar.isVisible = it.refresh == LoadState.Loading
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.top_app_bar_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.search -> {
+                sharedViewModel.allMovies = adapter.snapshot().items.sortedBy { it.title }
+                sharedViewModel.filteredMovies.value = sharedViewModel.allMovies
+                findNavController().navigate(R.id.action_movieListFragment_to_searchFragment)
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onClickAddToWishlist(movie: Movie) {

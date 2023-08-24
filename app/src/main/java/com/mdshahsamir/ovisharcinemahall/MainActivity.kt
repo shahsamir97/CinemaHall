@@ -1,6 +1,8 @@
 package com.mdshahsamir.ovisharcinemahall
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -17,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(findViewById(R.id.toolbar))
+        setSupportActionBar(findViewById(R.id.topAppBar))
 
         val navHostFragment: NavHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
@@ -25,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         bottomNav = findViewById(R.id.bottomNavigationView)
 
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            if (destination.id == R.id.movieDetailsFragment) {
+            if (destination.id == R.id.movieDetailsFragment || destination.id == R.id.searchFragment) {
                 bottomNav.visibility = View.GONE
             } else {
                 bottomNav.visibility = View.VISIBLE

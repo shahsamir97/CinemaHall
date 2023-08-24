@@ -20,4 +20,6 @@
     <string name="play_trailer">Play Trailer</string>
     <string name="overview">Overview</string>
     <string name="percentage_sign">%d\%</string>
+    <string name="search_movies">Search Movies</string>
+    <string name="search">Search</string>
 </resources>

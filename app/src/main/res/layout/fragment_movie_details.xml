@@ -32,6 +32,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:scaleType="centerCrop"
+                android:contentDescription="@string/movie_background_poster"
                 app:layout_constraintBottom_toTopOf="@+id/guideline"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -54,6 +55,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="fitXY"
+                    android:contentDescription="@string/movie_poster"
                     tools:src="@tools:sample/avatars" />
 
             </com.google.android.material.card.MaterialCardView>
@@ -105,7 +107,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/userScoreTitleTextView"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toTopOf="@+id/userScoreTitleTextView"
-                app:tint="?attr/colorPrimary" />
+                app:tint="?attr/colorPrimary"
+                android:contentDescription="@string/play_trailer" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -191,7 +194,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="Recommended Movies"
+                android:text="@string/recommended_movies"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"

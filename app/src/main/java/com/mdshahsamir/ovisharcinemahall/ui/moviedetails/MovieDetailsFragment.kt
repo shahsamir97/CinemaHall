@@ -62,44 +62,53 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(), Recomm
     }
 
     private fun showRecommendedMovies(movies: List<Movie>) {
-        binding.recommendedMoviesTitle.visibility = View.VISIBLE
-        binding.recommendedMovieRecyclerView.visibility = View.VISIBLE
-        binding.recommendedMovieRecyclerView.adapter = adapter
+        binding.apply {
+            recommendedMoviesTitle.visibility = View.VISIBLE
+            recommendedMovieRecyclerView.visibility = View.VISIBLE
+            recommendedMovieRecyclerView.adapter = adapter
+        }
+
         adapter.submitList(movies)
     }
 
     private fun showMovieDetails(movieDetails: MovieDetailsResponse?) {
-        binding.dataLoadingProgressBar.visibility = View.GONE
-        binding.errorMessageTextView.visibility = View.GONE
-        binding.movieDetailsLayout.visibility = View.VISIBLE
+        binding.apply {
+            dataLoadingProgressBar.visibility = View.GONE
+            errorMessageTextView.visibility = View.GONE
+            movieDetailsLayout.visibility = View.VISIBLE
 
-        movieDetails?.let { movie ->
-            binding.titleTextView.text = movie.title + " (${movie.getReleaseYear()})"
-            binding.overviewTextView.text = movie.overview
-            binding.popularityTextView.text = (movie.voteAverage * 10).toInt().toString() + "%"
-            binding.popularityProgressBar.progress = (movie.voteAverage * 10).toInt()
-            binding.genreTextView.text = getDottedText(movie.genres.map { it.name })
+            movieDetails?.let { movie ->
+                titleTextView.text = movie.title + " (${movie.getReleaseYear()})"
+                overviewTextView.text = movie.overview
+                popularityTextView.text = (movie.voteAverage * 10).toInt().toString() + "%"
+                popularityProgressBar.progress = (movie.voteAverage * 10).toInt()
+                genreTextView.text = getDottedText(movie.genres.map { it.name })
 
-            Glide.with(requireContext()).load(BuildConfig.IMAGE_BASE_URL + movie.posterPath)
-                .placeholder(R.drawable.loading_animation)
-                .into(binding.moviePosterImageView)
+                Glide.with(requireContext()).load(BuildConfig.IMAGE_BASE_URL + movie.posterPath)
+                    .placeholder(R.drawable.loading_animation)
+                    .into(moviePosterImageView)
 
-            Glide.with(requireContext()).load(BuildConfig.IMAGE_BASE_URL + movie.backdropPath)
-                .placeholder(R.drawable.loading_animation)
-                .into(binding.backgroundPosterImageView)
+                Glide.with(requireContext()).load(BuildConfig.IMAGE_BASE_URL + movie.backdropPath)
+                    .placeholder(R.drawable.loading_animation)
+                    .into(backgroundPosterImageView)
+            }
         }
     }
 
     private fun showLoader() {
-        binding.errorMessageTextView.visibility = View.GONE
-        binding.movieDetailsLayout.visibility = View.GONE
-        binding.dataLoadingProgressBar.visibility = View.VISIBLE
+        binding.apply {
+            errorMessageTextView.visibility = View.GONE
+            movieDetailsLayout.visibility = View.GONE
+            dataLoadingProgressBar.visibility = View.VISIBLE
+        }
     }
 
     private fun showErrorMessage() {
-        binding.errorMessageTextView.visibility = View.VISIBLE
-        binding.dataLoadingProgressBar.visibility = View.GONE
-        binding.movieDetailsLayout.visibility = View.GONE
+        binding.apply {
+            errorMessageTextView.visibility = View.VISIBLE
+            dataLoadingProgressBar.visibility = View.GONE
+            movieDetailsLayout.visibility = View.GONE
+        }
     }
 
     override fun onClickMovie(movieId: Int) {

@@ -32,6 +32,7 @@ class DashboardViewModel(private val repo: SharedRepository): BaseViewModel() {
          val movies = allMovies
         filteredMovies.value = movies.filter { it.title.contains(query, true) }
     }
+
     fun addMovieToWishList(movie: Movie) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {

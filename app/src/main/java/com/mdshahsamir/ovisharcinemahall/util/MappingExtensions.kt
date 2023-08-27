@@ -1,11 +1,12 @@
 package com.mdshahsamir.ovisharcinemahall.util
 
-import com.mdshahsamir.ovisharcinemahall.database.MovieDBEntity
-import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.model.dto.MovieDTO
+import com.mdshahsamir.ovisharcinemahall.model.dto.MovieDetailsDTO
+import com.mdshahsamir.ovisharcinemahall.model.Movie
+import com.mdshahsamir.ovisharcinemahall.model.MovieDetails
 
-fun Movie.toMovieDTO() : MovieDTO {
-    return MovieDTO(
+fun MovieDTO.toMovie() : Movie {
+    return Movie(
         id = this.id,
         title = this.title,
         adult = this.adult,
@@ -17,28 +18,17 @@ fun Movie.toMovieDTO() : MovieDTO {
     )
 }
 
-fun MovieDTO.toMovieDBEntity(): MovieDBEntity {
-    return MovieDBEntity(
-        id = this.id,
-        title = this.title,
-        adult = this.adult,
-        overview = this.overview,
-        originalTitle = this.originalTitle,
-        voteAverage = this.voteAverage,
-        posterPath = this.posterPath,
-        releaseDate = this.releaseDate
+fun MovieDetailsDTO.toMovieDetails(): MovieDetails {
+    return MovieDetails(
+        id = this.id ?: 1,
+        originalTitle = this.originalTitle ?: "",
+        releaseDate = this.releaseDate ?: "",
+        adult = this.adult ?: false,
+        backdropPath = this.backdropPath ?: "",
+        genres = this.genres ?: listOf(),
+        overview = this.overview ?: "",
+        posterPath = this.posterPath ?: "",
+        voteAverage = this.voteAverage ?: 0.0
     )
 }
 
-fun MovieDBEntity.toMovieDTO(): MovieDTO {
-    return MovieDTO(
-        id = this.id,
-        title = this.title,
-        adult = this.adult,
-        overview = this.overview,
-        originalTitle = this.originalTitle,
-        voteAverage = this.voteAverage,
-        posterPath = this.posterPath,
-        releaseDate = this.releaseDate
-    )
-}

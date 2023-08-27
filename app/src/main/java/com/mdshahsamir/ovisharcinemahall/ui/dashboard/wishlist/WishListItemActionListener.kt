@@ -1,10 +1,10 @@
 package com.mdshahsamir.ovisharcinemahall.ui.dashboard.wishlist
 
-import com.mdshahsamir.ovisharcinemahall.model.dto.MovieDTO
+import com.mdshahsamir.ovisharcinemahall.model.Movie
 
 interface WishListItemActionListener {
 
-    fun removeFromWishList(movie: MovieDTO)
+    fun removeFromWishList(movie: Movie)
 
     fun onClickMovie(movieId: Int)
 }

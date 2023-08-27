@@ -2,17 +2,27 @@ package com.mdshahsamir.ovisharcinemahall.model.dto
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 
 @Entity
-data class MovieDTO (
-        val adult: Boolean = false,
-        @PrimaryKey
-        val id: Int = 1,
-        val originalTitle: String = "",
-        val overview: String = "",
-        val posterPath: String = "",
-        val releaseDate: String = "",
-        val title: String = "",
-        val voteAverage: Double  = 0.0,
-        var isAddedToWishlist: Boolean = false
+data class MovieDTO(
+    val adult: Boolean,
+    @PrimaryKey
+    val id: Int,
+    @SerializedName("original_language")
+    val originalLanguage: String,
+    @SerializedName("original_title")
+    val originalTitle: String,
+    val overview: String,
+    val popularity: Double,
+    @SerializedName("poster_path")
+    val posterPath: String,
+    @SerializedName("release_date")
+    val releaseDate: String,
+    val title: String,
+    val video: Boolean,
+    @SerializedName("vote_average")
+    val voteAverage: Double,
+    @SerializedName("vote_count")
+    val voteCount: Int,
 )

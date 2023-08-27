@@ -2,25 +2,23 @@ package com.mdshahsamir.ovisharcinemahall.ui.dashboard.home
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.mdshahsamir.ovisharcinemahall.model.dto.MovieDTO
+import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.network.MovieAPIService
-import com.mdshahsamir.ovisharcinemahall.util.toMovieDTO
+import com.mdshahsamir.ovisharcinemahall.util.toMovie
 import java.lang.Exception
 
 class MovieListPagingSource(private val movieAPIService: MovieAPIService) :
-    PagingSource<Int, MovieDTO>() {
+    PagingSource<Int, Movie>() {
 
-    override fun getRefreshKey(state: PagingState<Int, MovieDTO>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, Movie>): Int? {
         return state.anchorPosition
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieDTO> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
         return try {
             val position = params.key ?: STARTING_INDEX
             val response = movieAPIService.fetchTopRatedMovies(page = position)
-            val movies = response.results.map { movie ->
-                movie.toMovieDTO()
-            }
+            val movies = response.results.map { it.toMovie() }
 
             LoadResult.Page(
                 data = movies,

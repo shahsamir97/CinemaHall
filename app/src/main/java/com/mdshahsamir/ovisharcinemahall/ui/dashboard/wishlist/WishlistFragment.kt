@@ -8,7 +8,7 @@ import com.mdshahsamir.ovisharcinemahall.base.BaseFragment
 import com.mdshahsamir.ovisharcinemahall.base.BaseViewModel
 import com.mdshahsamir.ovisharcinemahall.databinding.FragmentWishlistBinding
 import com.mdshahsamir.ovisharcinemahall.di.DashboardRepositoryInjector
-import com.mdshahsamir.ovisharcinemahall.model.dto.MovieDTO
+import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModel
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModelFactory
 
@@ -41,7 +41,7 @@ class WishlistFragment : BaseFragment<FragmentWishlistBinding>(), WishListItemAc
         }
     }
 
-    override fun removeFromWishList(movie: MovieDTO) {
+    override fun removeFromWishList(movie: Movie) {
         sharedViewModel.removeFromWishList(movie)
     }
 

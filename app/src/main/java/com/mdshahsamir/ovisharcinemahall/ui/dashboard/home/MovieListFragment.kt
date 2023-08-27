@@ -14,7 +14,7 @@ import com.mdshahsamir.ovisharcinemahall.base.BaseFragment
 import com.mdshahsamir.ovisharcinemahall.base.BaseViewModel
 import com.mdshahsamir.ovisharcinemahall.databinding.FragmentMovieListBinding
 import com.mdshahsamir.ovisharcinemahall.di.DashboardRepositoryInjector
-import com.mdshahsamir.ovisharcinemahall.model.dto.MovieDTO
+import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModel
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModelFactory
 import kotlinx.coroutines.flow.collectLatest
@@ -71,11 +71,11 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onClickAddToWishlist(movie: MovieDTO) {
+    override fun onClickAddToWishlist(movie: Movie) {
         sharedViewModel.addMovieToWishList(movie)
     }
 
-    override fun onClickRemoveFromWishlist(movie: MovieDTO) {
+    override fun onClickRemoveFromWishlist(movie: Movie) {
         sharedViewModel.removeFromWishList(movie)
     }
 

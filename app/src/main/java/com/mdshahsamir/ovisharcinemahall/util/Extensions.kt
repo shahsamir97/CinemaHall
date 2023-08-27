@@ -1,9 +1,6 @@
 package com.mdshahsamir.ovisharcinemahall.util
 
 import android.icu.text.SimpleDateFormat
-import com.mdshahsamir.ovisharcinemahall.database.MovieDBEntity
-import com.mdshahsamir.ovisharcinemahall.model.Movie
-import com.mdshahsamir.ovisharcinemahall.model.dto.MovieDTO
 import java.text.ParseException
 import java.util.Locale
 

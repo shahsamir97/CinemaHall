@@ -11,7 +11,7 @@ import com.bumptech.glide.RequestManager
 import com.mdshahsamir.ovisharcinemahall.BuildConfig
 import com.mdshahsamir.ovisharcinemahall.R
 import com.mdshahsamir.ovisharcinemahall.databinding.MovieListItemBinding
-import com.mdshahsamir.ovisharcinemahall.model.dto.MovieDTO
+import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.util.API_DATE_FORMAT
 import com.mdshahsamir.ovisharcinemahall.util.MovieDiffUtil
 import com.mdshahsamir.ovisharcinemahall.util.toDisplayableDateFormat
@@ -19,7 +19,7 @@ import com.mdshahsamir.ovisharcinemahall.util.toDisplayableDateFormat
 class MovieListAdapter(
     private val glideRequestManager: RequestManager,
     private val itemActionListener: MovieListItemActionListener
-): PagingDataAdapter<MovieDTO, MovieListAdapter.MovieViewHolder>(MovieDiffUtil) {
+): PagingDataAdapter<Movie, MovieListAdapter.MovieViewHolder>(MovieDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val binding = MovieListItemBinding.inflate(
@@ -39,7 +39,7 @@ class MovieListAdapter(
 
         private lateinit var drawableAnimation: AnimatedVectorDrawable
 
-        fun bind(movie: MovieDTO) {
+        fun bind(movie: Movie) {
             binding.apply {
                 titleTextView.text = movie.title
                 releaseDateTextView.text = movie.releaseDate.toDisplayableDateFormat(API_DATE_FORMAT)
@@ -75,13 +75,13 @@ class MovieListAdapter(
             }
         }
 
-        private fun runAddToWishlistIconAnimation(movie: MovieDTO) {
+        private fun runAddToWishlistIconAnimation(movie: Movie) {
             switchAnimDrawable(movie)
             movie.isAddedToWishlist = !movie.isAddedToWishlist
             drawableAnimation.start()
         }
 
-        private fun switchAnimDrawable(movie: MovieDTO) {
+        private fun switchAnimDrawable(movie: Movie) {
             binding.imageView.apply {
                 setImageDrawable(
                     ResourcesCompat.getDrawable(

@@ -11,7 +11,7 @@ import com.bumptech.glide.RequestManager
 import com.mdshahsamir.ovisharcinemahall.BuildConfig
 import com.mdshahsamir.ovisharcinemahall.R
 import com.mdshahsamir.ovisharcinemahall.databinding.MovieListItemBinding
-import com.mdshahsamir.ovisharcinemahall.model.Movie
+import com.mdshahsamir.ovisharcinemahall.model.dto.MovieDTO
 import com.mdshahsamir.ovisharcinemahall.util.API_DATE_FORMAT
 import com.mdshahsamir.ovisharcinemahall.util.MovieDiffUtil
 import com.mdshahsamir.ovisharcinemahall.util.toDisplayableDateFormat
@@ -19,8 +19,7 @@ import com.mdshahsamir.ovisharcinemahall.util.toDisplayableDateFormat
 class MovieListAdapter(
     private val glideRequestManager: RequestManager,
     private val itemActionListener: MovieListItemActionListener
-) :
-    PagingDataAdapter<Movie, MovieListAdapter.MovieViewHolder>(MovieDiffUtil) {
+): PagingDataAdapter<MovieDTO, MovieListAdapter.MovieViewHolder>(MovieDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val binding = MovieListItemBinding.inflate(
@@ -40,7 +39,7 @@ class MovieListAdapter(
 
         private lateinit var drawableAnimation: AnimatedVectorDrawable
 
-        fun bind(movie: Movie) {
+        fun bind(movie: MovieDTO) {
             binding.apply {
                 titleTextView.text = movie.title
                 releaseDateTextView.text = movie.releaseDate.toDisplayableDateFormat(API_DATE_FORMAT)
@@ -76,13 +75,13 @@ class MovieListAdapter(
             }
         }
 
-        private fun runAddToWishlistIconAnimation(movie: Movie) {
+        private fun runAddToWishlistIconAnimation(movie: MovieDTO) {
             switchAnimDrawable(movie)
             movie.isAddedToWishlist = !movie.isAddedToWishlist
             drawableAnimation.start()
         }
 
-        private fun switchAnimDrawable(movie: Movie) {
+        private fun switchAnimDrawable(movie: MovieDTO) {
             binding.imageView.apply {
                 setImageDrawable(
                     ResourcesCompat.getDrawable(

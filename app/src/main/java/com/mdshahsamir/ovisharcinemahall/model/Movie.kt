@@ -25,5 +25,4 @@ data class Movie(
     val voteAverage: Double,
     @SerializedName("vote_count")
     val voteCount: Int,
-    var isAddedToWishlist: Boolean = false
 )

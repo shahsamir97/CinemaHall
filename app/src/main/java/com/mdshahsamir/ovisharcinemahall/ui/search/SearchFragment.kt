@@ -14,11 +14,10 @@ import com.mdshahsamir.ovisharcinemahall.base.BaseFragment
 import com.mdshahsamir.ovisharcinemahall.base.BaseViewModel
 import com.mdshahsamir.ovisharcinemahall.databinding.FragmentSearchBinding
 import com.mdshahsamir.ovisharcinemahall.di.DashboardRepositoryInjector
-import com.mdshahsamir.ovisharcinemahall.model.Movie
+import com.mdshahsamir.ovisharcinemahall.model.dto.MovieDTO
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModel
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModelFactory
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.home.MovieListItemActionListener
-
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>(), MovieListItemActionListener {
 
@@ -85,11 +84,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), MovieListItemActio
         }
     }
 
-    override fun onClickAddToWishlist(movie: Movie) {
+    override fun onClickAddToWishlist(movie: MovieDTO) {
         sharedViewModel.addMovieToWishList(movie)
     }
 
-    override fun onClickRemoveFromWishlist(movie: Movie) {
+    override fun onClickRemoveFromWishlist(movie: MovieDTO) {
         sharedViewModel.removeFromWishList(movie)
     }
 

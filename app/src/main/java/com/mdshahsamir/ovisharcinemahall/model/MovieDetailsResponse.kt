@@ -9,8 +9,6 @@ data class MovieDetailsResponse(
     val adult: Boolean,
     @SerializedName("backdrop_path")
     val backdropPath: String,
-    @SerializedName("belongs_to_collection")
-    val belongsToCollection: BelongsToCollection,
     val budget: Int,
     val genres: List<Genre>,
     val homepage: String,
@@ -29,8 +27,6 @@ data class MovieDetailsResponse(
     val releaseDate: String,
     val revenue: Int,
     val runtime: Int,
-    @SerializedName("spoken_languages")
-    val spokenLanguages: List<SpokenLanguage>,
     val status: String,
     val tagline: String,
     val title: String,

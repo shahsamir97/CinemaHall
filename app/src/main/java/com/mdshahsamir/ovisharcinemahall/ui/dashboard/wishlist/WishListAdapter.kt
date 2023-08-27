@@ -9,13 +9,13 @@ import com.bumptech.glide.RequestManager
 import com.mdshahsamir.ovisharcinemahall.BuildConfig
 import com.mdshahsamir.ovisharcinemahall.R
 import com.mdshahsamir.ovisharcinemahall.databinding.WishlistItemBinding
-import com.mdshahsamir.ovisharcinemahall.model.Movie
+import com.mdshahsamir.ovisharcinemahall.model.dto.MovieDTO
 import com.mdshahsamir.ovisharcinemahall.util.MovieDiffUtil
 
 class WishListAdapter(
     private val glideRequestManager: RequestManager,
     private val itemActionListener: WishListItemActionListener
-): ListAdapter<Movie, WishListAdapter.WishListViewHolder>(MovieDiffUtil) {
+): ListAdapter<MovieDTO, WishListAdapter.WishListViewHolder>(MovieDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WishListViewHolder {
         val binding = WishlistItemBinding.inflate(
@@ -33,7 +33,7 @@ class WishListAdapter(
     inner class WishListViewHolder(private val binding: WishlistItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(movie: Movie) {
+        fun bind(movie: MovieDTO) {
             binding.apply {
                 titleTextView.text = movie.title
                 releaseDateTextView.text = movie.releaseDate

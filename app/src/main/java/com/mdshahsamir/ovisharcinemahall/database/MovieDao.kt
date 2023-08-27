@@ -12,11 +12,11 @@ import com.mdshahsamir.ovisharcinemahall.model.Movie
 interface MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertMovie(movie: Movie)
+    fun insertMovie(movie: MovieDBEntity)
 
     @Delete
-    fun deleteMovie(movie: Movie)
+    fun deleteMovie(movie: MovieDBEntity)
 
-    @Query("SELECT * FROM movie")
-    fun getAllMovie(): LiveData<List<Movie>>
+    @Query("SELECT * FROM moviedbentity")
+    fun getAllMovie(): LiveData<List<MovieDBEntity>>
 }

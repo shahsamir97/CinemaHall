@@ -1,7 +1,7 @@
 package com.mdshahsamir.ovisharcinemahall.network
 
 import com.mdshahsamir.ovisharcinemahall.model.dto.MovieDetailsDTO
-import com.mdshahsamir.ovisharcinemahall.model.ListOfMoviesResponseDTO
+import com.mdshahsamir.ovisharcinemahall.model.dto.ListOfMoviesResponseDTO
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

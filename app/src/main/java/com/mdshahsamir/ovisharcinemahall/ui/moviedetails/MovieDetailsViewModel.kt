@@ -16,8 +16,8 @@ class MovieDetailsViewModel(movieId: Int, repo: MovieDetailsRepository) :
     val movieDetailsFlow: Flow<MovieDetailsUiState> =
         repo.fetchMovieDetails(movieId).map {
             MovieDetailsUiState.Success(it.first, it.second)
-        }.catch {
-            MovieDetailsUiState.Error(it)
+        }.catch { e ->
+            showMessage.value = "Something went wrong"
         }.stateIn(
             initialValue = MovieDetailsUiState.Loading,
             scope = viewModelScope,

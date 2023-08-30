@@ -7,14 +7,14 @@ import com.mdshahsamir.ovisharcinemahall.model.MovieDetails
 
 fun MovieDTO.toMovie() : Movie {
     return Movie(
-        id = this.id,
-        title = this.title,
-        adult = this.adult,
-        overview = this.overview,
-        originalTitle = this.originalTitle,
-        voteAverage = this.voteAverage,
-        posterPath = this.posterPath,
-        releaseDate = this.releaseDate
+        id = this.id ?: 1,
+        title = this.title ?: "",
+        adult = this.adult ?: false,
+        overview = this.overview ?: "",
+        originalTitle = this.originalTitle ?: "",
+        voteAverage = this.voteAverage ?: 0.0,
+        posterPath = this.posterPath ?: "",
+        releaseDate = this.releaseDate ?: ""
     )
 }
 

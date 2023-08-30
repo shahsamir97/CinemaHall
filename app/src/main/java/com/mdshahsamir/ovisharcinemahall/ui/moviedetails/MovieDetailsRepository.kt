@@ -18,7 +18,7 @@ class MovieDetailsRepositoryImpl(private val apiService: MovieAPIService) : Movi
     override fun fetchMovieDetails(movieId: Int): Flow<Pair<MovieDetails, List<Movie>>> =
         flow {
             val movieDetails = apiService.fetchMovieDetails(movieId).toMovieDetails()
-            val recommendedMovies = apiService.fetchRecommendedMovies(movieId).results.map { it.toMovie() }
+            val recommendedMovies = apiService.fetchRecommendedMovies(movieId).results!!.map { it.toMovie() }
             emit(Pair(movieDetails, recommendedMovies))
         }
 }

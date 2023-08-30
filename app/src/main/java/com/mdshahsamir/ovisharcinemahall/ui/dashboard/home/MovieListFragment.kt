@@ -3,6 +3,7 @@ package com.mdshahsamir.ovisharcinemahall.ui.dashboard.home
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -52,6 +53,9 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
 
         adapter.addLoadStateListener {
             binding.progressBar.isVisible = it.refresh == LoadState.Loading
+            if (it.refresh is LoadState.Error) {
+                Toast.makeText(requireContext(), "Something went wrong!", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

@@ -15,7 +15,7 @@ import com.mdshahsamir.ovisharcinemahall.base.BaseViewModel
 import com.mdshahsamir.ovisharcinemahall.databinding.FragmentMovieDetailsBinding
 import com.mdshahsamir.ovisharcinemahall.di.MovieDetailsRepoDependencyInjector
 import com.mdshahsamir.ovisharcinemahall.model.Movie
-import com.mdshahsamir.ovisharcinemahall.model.MovieDetailsResponse
+import com.mdshahsamir.ovisharcinemahall.model.MovieDetails
 import com.mdshahsamir.ovisharcinemahall.util.getDottedText
 import kotlinx.coroutines.launch
 
@@ -71,14 +71,14 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(), Recomm
         adapter.submitList(movies)
     }
 
-    private fun showMovieDetails(movieDetails: MovieDetailsResponse?) {
+    private fun showMovieDetails(movieDetails: MovieDetails?) {
         binding.apply {
             dataLoadingProgressBar.visibility = View.GONE
             errorMessageTextView.visibility = View.GONE
             movieDetailsLayout.visibility = View.VISIBLE
 
             movieDetails?.let { movie ->
-                titleTextView.text = movie.title + " (${movie.getReleaseYear()})"
+                titleTextView.text = movie.originalTitle + " (${movie.getReleaseYear()})"
                 overviewTextView.text = movie.overview
                 popularityTextView.text = (movie.voteAverage * 10).toInt().toString() + "%"
                 popularityProgressBar.progress = (movie.voteAverage * 10).toInt()

@@ -19,8 +19,7 @@ import com.mdshahsamir.ovisharcinemahall.util.toDisplayableDateFormat
 class MovieListAdapter(
     private val glideRequestManager: RequestManager,
     private val itemActionListener: MovieListItemActionListener
-) :
-    PagingDataAdapter<Movie, MovieListAdapter.MovieViewHolder>(MovieDiffUtil) {
+): PagingDataAdapter<Movie, MovieListAdapter.MovieViewHolder>(MovieDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val binding = MovieListItemBinding.inflate(

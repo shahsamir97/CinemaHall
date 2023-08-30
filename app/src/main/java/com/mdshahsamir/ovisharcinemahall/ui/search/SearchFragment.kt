@@ -19,7 +19,6 @@ import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModel
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModelFactory
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.home.MovieListItemActionListener
 
-
 class SearchFragment : BaseFragment<FragmentSearchBinding>(), MovieListItemActionListener {
 
     private val sharedViewModel: DashboardViewModel by activityViewModels {

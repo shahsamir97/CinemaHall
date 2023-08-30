@@ -17,6 +17,6 @@ interface MovieDao {
     @Delete
     fun deleteMovie(movie: Movie)
 
-    @Query("SELECT * FROM movie")
+    @Query("SELECT * FROM Movie")
     fun getAllMovie(): LiveData<List<Movie>>
 }

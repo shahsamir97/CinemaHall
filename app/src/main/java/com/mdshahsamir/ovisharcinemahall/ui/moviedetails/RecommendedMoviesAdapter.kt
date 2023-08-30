@@ -2,7 +2,6 @@ package com.mdshahsamir.ovisharcinemahall.ui.moviedetails
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.RequestManager
@@ -11,6 +10,7 @@ import com.mdshahsamir.ovisharcinemahall.R
 import com.mdshahsamir.ovisharcinemahall.databinding.RecommendedMoviesListItemBinding
 import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.util.API_DATE_FORMAT
+import com.mdshahsamir.ovisharcinemahall.util.MovieDiffUtil
 import com.mdshahsamir.ovisharcinemahall.util.toDisplayableDateFormat
 
 class RecommendedMoviesAdapter(
@@ -46,16 +46,6 @@ class RecommendedMoviesAdapter(
             binding.root.setOnClickListener {
                 actionListener.onClickMovie(movie.id)
             }
-        }
-    }
-
-    object MovieDiffUtil : DiffUtil.ItemCallback<Movie>() {
-        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem == newItem
         }
     }
 }

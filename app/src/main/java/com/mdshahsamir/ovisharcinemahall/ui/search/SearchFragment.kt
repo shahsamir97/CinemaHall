@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.MenuItem.OnActionExpandListener
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
@@ -76,6 +77,17 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), MovieListItemActio
     ) {
         searchItem.expandActionView()
         searchView.queryHint = getString(R.string.search_movies)
+
+        searchItem.setOnActionExpandListener(object : OnActionExpandListener{
+            override fun onMenuItemActionExpand(item: MenuItem): Boolean {
+                return true
+            }
+
+            override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
+                findNavController().navigateUp()
+                return true
+            }
+        })
 
         val textView: TextView = searchView.findViewById(androidx.appcompat.R.id.search_src_text)
         textView.apply {

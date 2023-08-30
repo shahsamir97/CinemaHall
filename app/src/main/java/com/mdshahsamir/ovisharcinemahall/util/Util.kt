@@ -1,7 +1,11 @@
 package com.mdshahsamir.ovisharcinemahall.util
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import androidx.recyclerview.widget.DiffUtil
 import com.mdshahsamir.ovisharcinemahall.model.Movie
+
 
 const val API_DATE_FORMAT = "yyyy-MM-dd"
 const val DISPLAY_DATE_FORMAT = "MMMM dd, yyyy"
@@ -24,4 +28,16 @@ object MovieDiffUtil : DiffUtil.ItemCallback<Movie>() {
     override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
         return oldItem == newItem
     }
+}
+
+fun isInternetAvailable(context: Context): Boolean {
+    val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+    val network = connectivityManager.activeNetwork
+    val networkCapabilities = connectivityManager.getNetworkCapabilities(network)
+    return networkCapabilities?.run {
+        hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
+                hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
+    } ?: false
 }

@@ -19,6 +19,7 @@ import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModel
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModelFactory
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.home.MovieListItemActionListener
+import com.mdshahsamir.ovisharcinemahall.util.runIfInternetAvailable
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>(), MovieListItemActionListener {
 
@@ -105,7 +106,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), MovieListItemActio
     }
 
     override fun onClickMovie(movieId: Int) {
-        val action = SearchFragmentDirections.actionSearchFragmentToMovieDetailsFragment(movieId)
-        findNavController().navigate(action)
+        runIfInternetAvailable(requireContext()) {
+            val action = SearchFragmentDirections.actionSearchFragmentToMovieDetailsFragment(movieId)
+            findNavController().navigate(action)
+        }
     }
 }

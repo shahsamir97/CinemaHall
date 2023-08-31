@@ -18,6 +18,7 @@ import com.mdshahsamir.ovisharcinemahall.di.MovieDetailsRepoDependencyInjector
 import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.model.MovieDetails
 import com.mdshahsamir.ovisharcinemahall.util.getDottedText
+import com.mdshahsamir.ovisharcinemahall.util.runIfInternetAvailable
 import kotlinx.coroutines.launch
 
 class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(), RecommendedMovieActionListener {
@@ -93,22 +94,10 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(), Recomm
         }
     }
 
-    private fun showLoader() {
-        binding.apply {
-            movieDetailsLayout.visibility = View.GONE
-            dataLoadingProgressBar.visibility = View.VISIBLE
-        }
-    }
-
-    private fun showErrorMessage() {
-        binding.apply {
-            dataLoadingProgressBar.visibility = View.GONE
-            movieDetailsLayout.visibility = View.GONE
-        }
-    }
-
     override fun onClickMovie(movieId: Int) {
-        val action = MovieDetailsFragmentDirections.actionMovieDetailsFragmentSelf(movieId)
-        findNavController().navigate(action)
+        runIfInternetAvailable(requireContext()) {
+            val action = MovieDetailsFragmentDirections.actionMovieDetailsFragmentSelf(movieId)
+            findNavController().navigate(action)
+        }
     }
 }

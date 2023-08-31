@@ -49,8 +49,7 @@ class WishListAdapter(
                 imageView.setOnClickListener {
                     try {
                         itemActionListener.removeFromWishList(movie)
-                    }
-                    catch (e: Exception) {
+                    } catch (e: Exception) {
                         e.printStackTrace()
                         Toast.makeText(
                             root.context,

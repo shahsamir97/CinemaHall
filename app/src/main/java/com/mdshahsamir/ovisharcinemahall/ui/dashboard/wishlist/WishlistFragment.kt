@@ -1,7 +1,6 @@
 package com.mdshahsamir.ovisharcinemahall.ui.dashboard.wishlist
 
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -12,7 +11,7 @@ import com.mdshahsamir.ovisharcinemahall.di.DashboardRepositoryInjector
 import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModel
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModelFactory
-import com.mdshahsamir.ovisharcinemahall.util.isInternetAvailable
+import com.mdshahsamir.ovisharcinemahall.util.runIfInternetAvailable
 
 class WishlistFragment : BaseFragment<FragmentWishlistBinding>(), WishListItemActionListener {
 
@@ -48,11 +47,9 @@ class WishlistFragment : BaseFragment<FragmentWishlistBinding>(), WishListItemAc
     }
 
     override fun onClickMovie(movieId: Int) {
-        if (isInternetAvailable(requireContext())) {
+        runIfInternetAvailable(requireContext(), "You're in offline mode") {
             val action = WishlistFragmentDirections.actionWishlistFragmentToMovieDetailsFragment(movieId)
             findNavController().navigate(action)
-        } else {
-            Toast.makeText(requireContext(), "You're in offline mode", Toast.LENGTH_SHORT).show()
         }
     }
 }

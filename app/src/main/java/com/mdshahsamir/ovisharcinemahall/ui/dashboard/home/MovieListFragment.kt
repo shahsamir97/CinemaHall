@@ -18,7 +18,7 @@ import com.mdshahsamir.ovisharcinemahall.di.DashboardRepositoryInjector
 import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModel
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModelFactory
-import com.mdshahsamir.ovisharcinemahall.util.isInternetAvailable
+import com.mdshahsamir.ovisharcinemahall.util.runIfInternetAvailable
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -86,12 +86,9 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
     }
 
     override fun onClickMovie(movieId: Int) {
-        if (isInternetAvailable(requireContext())) {
-            val action = MovieListFragmentDirections.actionMovieListFragmentToMovieDetailsFragment(movieId)
-            findNavController().navigate(action)
-        } else {
-            Toast.makeText(requireContext(), "You're not connected to internet", Toast.LENGTH_SHORT)
-                .show()
-        }
+       runIfInternetAvailable(requireContext()) {
+           val action = MovieListFragmentDirections.actionMovieListFragmentToMovieDetailsFragment(movieId)
+           findNavController().navigate(action)
+       }
     }
 }

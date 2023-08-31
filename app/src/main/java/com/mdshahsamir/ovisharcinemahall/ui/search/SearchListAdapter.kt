@@ -38,9 +38,7 @@ class SearchListAdapter(
         fun bind(movie: Movie) {
             binding.apply {
                 titleTextView.text = movie.title
-                releaseDateTextView.text = movie.releaseDate.toDisplayableDateFormat(
-                    API_DATE_FORMAT
-                )
+                releaseDateTextView.text = movie.releaseDate.toDisplayableDateFormat(API_DATE_FORMAT)
                 switchAnimDrawable(movie)
 
                 glideRequestManager.load(BuildConfig.IMAGE_BASE_URL + movie.posterPath)

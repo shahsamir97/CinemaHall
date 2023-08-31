@@ -11,7 +11,6 @@ import androidx.viewbinding.ViewBinding
 abstract class BaseFragment<VBinding : ViewBinding> : Fragment() {
 
     protected lateinit var binding: VBinding
-
     protected abstract fun getViewBinding(): VBinding
     protected abstract fun getViewModel(): BaseViewModel?
 

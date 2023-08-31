@@ -11,6 +11,7 @@ import com.mdshahsamir.ovisharcinemahall.di.DashboardRepositoryInjector
 import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModel
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModelFactory
+import com.mdshahsamir.ovisharcinemahall.util.runIfInternetAvailable
 
 class WishlistFragment : BaseFragment<FragmentWishlistBinding>(), WishListItemActionListener {
 
@@ -46,7 +47,9 @@ class WishlistFragment : BaseFragment<FragmentWishlistBinding>(), WishListItemAc
     }
 
     override fun onClickMovie(movieId: Int) {
-        val action = WishlistFragmentDirections.actionWishlistFragmentToMovieDetailsFragment(movieId)
-        findNavController().navigate(action)
+        runIfInternetAvailable(requireContext(), "You're in offline mode") {
+            val action = WishlistFragmentDirections.actionWishlistFragmentToMovieDetailsFragment(movieId)
+            findNavController().navigate(action)
+        }
     }
 }

@@ -1,5 +1,9 @@
 package com.mdshahsamir.ovisharcinemahall.util
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import com.mdshahsamir.ovisharcinemahall.model.Movie
 
@@ -23,5 +27,25 @@ object MovieDiffUtil : DiffUtil.ItemCallback<Movie>() {
 
     override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
         return oldItem == newItem
+    }
+}
+
+private fun isInternetAvailable(context: Context): Boolean {
+    val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val network = connectivityManager.activeNetwork
+    val networkCapabilities = connectivityManager.getNetworkCapabilities(network)
+
+    return networkCapabilities?.run {
+        hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
+                hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
+    } ?: false
+}
+
+fun runIfInternetAvailable(context: Context, noInternetMessage: String? = null, codeBlock:() -> Unit) {
+    if (isInternetAvailable(context)) {
+        codeBlock()
+    } else {
+        Toast.makeText(context, noInternetMessage ?: "You're not connected to internet", Toast.LENGTH_SHORT).show()
     }
 }

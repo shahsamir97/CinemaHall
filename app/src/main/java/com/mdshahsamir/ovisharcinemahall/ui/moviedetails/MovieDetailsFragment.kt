@@ -1,6 +1,7 @@
 package com.mdshahsamir.ovisharcinemahall.ui.moviedetails
 
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -17,6 +18,7 @@ import com.mdshahsamir.ovisharcinemahall.di.MovieDetailsRepoDependencyInjector
 import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.model.MovieDetails
 import com.mdshahsamir.ovisharcinemahall.util.getDottedText
+import com.mdshahsamir.ovisharcinemahall.util.runIfInternetAvailable
 import kotlinx.coroutines.launch
 
 class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(), RecommendedMovieActionListener {
@@ -42,19 +44,17 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(), Recomm
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.movieDetailsFlow.collect { uiState ->
-                    when (uiState) {
-                        is MovieDetailsUiState.Loading -> {
-                            showLoader()
-                        }
+                    binding.dataLoadingProgressBar.isVisible = uiState is MovieDetailsUiState.Loading
+                    binding.noInternetDialog.root.isVisible = uiState is MovieDetailsUiState.Error
+                    binding.movieDetailsLayout.isVisible = uiState is MovieDetailsUiState.Success
 
+                    when (uiState) {
                         is MovieDetailsUiState.Success -> {
                             showMovieDetails(uiState.movieDetails)
                             showRecommendedMovies(uiState.recommendedMovies)
                         }
 
-                        is MovieDetailsUiState.Error -> {
-                            showErrorMessage()
-                        }
+                        else -> {}
                     }
                 }
             }
@@ -74,7 +74,6 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(), Recomm
     private fun showMovieDetails(movieDetails: MovieDetails?) {
         binding.apply {
             dataLoadingProgressBar.visibility = View.GONE
-            errorMessageTextView.visibility = View.GONE
             movieDetailsLayout.visibility = View.VISIBLE
 
             movieDetails?.let { movie ->
@@ -95,24 +94,10 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(), Recomm
         }
     }
 
-    private fun showLoader() {
-        binding.apply {
-            errorMessageTextView.visibility = View.GONE
-            movieDetailsLayout.visibility = View.GONE
-            dataLoadingProgressBar.visibility = View.VISIBLE
-        }
-    }
-
-    private fun showErrorMessage() {
-        binding.apply {
-            errorMessageTextView.visibility = View.VISIBLE
-            dataLoadingProgressBar.visibility = View.GONE
-            movieDetailsLayout.visibility = View.GONE
-        }
-    }
-
     override fun onClickMovie(movieId: Int) {
-        val action = MovieDetailsFragmentDirections.actionMovieDetailsFragmentSelf(movieId)
-        findNavController().navigate(action)
+        runIfInternetAvailable(requireContext()) {
+            val action = MovieDetailsFragmentDirections.actionMovieDetailsFragmentSelf(movieId)
+            findNavController().navigate(action)
+        }
     }
 }

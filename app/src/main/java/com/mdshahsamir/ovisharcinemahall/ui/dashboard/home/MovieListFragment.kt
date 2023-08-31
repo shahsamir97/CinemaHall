@@ -18,6 +18,7 @@ import com.mdshahsamir.ovisharcinemahall.di.DashboardRepositoryInjector
 import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModel
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModelFactory
+import com.mdshahsamir.ovisharcinemahall.util.runIfInternetAvailable
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -53,6 +54,7 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
 
         adapter.addLoadStateListener {
             binding.progressBar.isVisible = it.refresh == LoadState.Loading
+            binding.noInternetImageView.root.isVisible = it.refresh is LoadState.Error
             if (it.refresh is LoadState.Error) {
                 Toast.makeText(requireContext(), "Something went wrong!", Toast.LENGTH_SHORT).show()
             }
@@ -84,7 +86,9 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
     }
 
     override fun onClickMovie(movieId: Int) {
-        val action = MovieListFragmentDirections.actionMovieListFragmentToMovieDetailsFragment(movieId)
-        findNavController().navigate(action)
+       runIfInternetAvailable(requireContext()) {
+           val action = MovieListFragmentDirections.actionMovieListFragmentToMovieDetailsFragment(movieId)
+           findNavController().navigate(action)
+       }
     }
 }

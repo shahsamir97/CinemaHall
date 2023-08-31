@@ -18,9 +18,11 @@ class MovieListPagingSource(private val movieAPIService: MovieAPIService) :
         return try {
             val position = params.key ?: STARTING_INDEX
             val response = movieAPIService.fetchTopRatedMovies(page = position)
-            val movies = response.results.let {
 
-                if (it.isNullOrEmpty()) listOf()
+            val movies = response.results.let {
+                if (it.isNullOrEmpty()) {
+                    listOf()
+                }
                 else {
                     it.map { it.toMovie() }
                 }

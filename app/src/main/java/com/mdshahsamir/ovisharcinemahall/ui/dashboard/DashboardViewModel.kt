@@ -16,7 +16,7 @@ import kotlinx.coroutines.withContext
 
 class DashboardViewModel(private val repo: SharedRepository): BaseViewModel() {
 
-    val movieList: Flow<PagingData<Movie>> = repo.fetchTopRatedMovies().cachedIn(viewModelScope).map{ pagingData ->
+    val movieList: Flow<PagingData<Movie>> = repo.fetchTopRatedMovies().cachedIn(viewModelScope).map { pagingData ->
         pagingData.map { movie ->
             val isAddedToWishlist = wishList.value?.any { it.id == movie.id } ?: false
             val modifiedMovie = movie.copy(isAddedToWishlist = isAddedToWishlist)

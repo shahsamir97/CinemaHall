@@ -5,7 +5,5 @@ import androidx.lifecycle.ViewModel
 
 abstract class BaseViewModel : ViewModel() {
 
-    val dataLoading = MutableLiveData<Boolean>()
-
     val showMessage = MutableLiveData<String>()
 }

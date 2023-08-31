@@ -52,7 +52,7 @@ class WishlistFragment : BaseFragment<FragmentWishlistBinding>(), WishListItemAc
             val action = WishlistFragmentDirections.actionWishlistFragmentToMovieDetailsFragment(movieId)
             findNavController().navigate(action)
         } else {
-            Toast.makeText(requireContext(), "You're in offline mood", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "You're in offline mode", Toast.LENGTH_SHORT).show()
         }
     }
 }

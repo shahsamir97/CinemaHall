@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface SharedRepository {
 
-    fun fetchWishListFromDB(): LiveData<List<Movie>>
+    fun fetchWishListFromDB(): List<Movie>
 
     fun fetchTopRatedMovies(): Flow<PagingData<Movie>>
 
@@ -37,7 +37,7 @@ class SharedRepositoryIml(
         ).flow
     }
 
-    override fun fetchWishListFromDB(): LiveData<List<Movie>> = movieDao.getAllMovie()
+    override fun fetchWishListFromDB(): List<Movie> = movieDao.getAllMovie()
 
     override fun insertMovieToDB(movie: Movie) {
         movieDao.insertMovie(movie)

@@ -6,9 +6,12 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import androidx.paging.map
 import com.bumptech.glide.Glide
 import com.mdshahsamir.ovisharcinemahall.R
 import com.mdshahsamir.ovisharcinemahall.base.BaseFragment
@@ -40,15 +43,24 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
 
     override fun setUpViews() {
         setHasOptionsMenu(true)
+
+        sharedViewModel.loadWishList()
         binding.movieRecyclerView.adapter = adapter
     }
 
     override fun observeData() {
         super.observeData()
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            sharedViewModel.movieList.collectLatest { pagingData ->
-                adapter.submitData(pagingData)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                sharedViewModel.movieList.collectLatest { pagingData ->
+                    adapter.submitData(
+                    pagingData.map { movie ->
+                        val isAddedToWishlist = sharedViewModel.wishList.value?.any { it.id == movie.id } ?: false
+                        val modifiedMovie = movie.copy(isAddedToWishlist = isAddedToWishlist)
+                        modifiedMovie
+                    })
+                }
             }
         }
 

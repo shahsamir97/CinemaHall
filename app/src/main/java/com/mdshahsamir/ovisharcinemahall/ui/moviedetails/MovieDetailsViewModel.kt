@@ -10,8 +10,10 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
-class MovieDetailsViewModel(movieId: Int, repo: MovieDetailsRepository) :
+class MovieDetailsViewModel(movieId: Int, var isAddedToWishlist: Boolean, repo: MovieDetailsRepository) :
     BaseViewModel() {
+
+
 
     val movieDetailsFlow: Flow<MovieDetailsUiState> =
         repo.fetchMovieDetails(movieId).map {

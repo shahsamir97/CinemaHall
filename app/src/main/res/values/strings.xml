@@ -30,4 +30,6 @@
     <string name="top_rated_movies">Top Rated Movies</string>
     <string name="movie_details">Movie Details</string>
     <string name="no_internet_message">Failed To Load! \n Check Internet Connection</string>
+    <string name="add_to_wishlist">Add To Wishlist</string>
+    <string name="on_your_wishlist">On Your Wishlist</string>
 </resources>

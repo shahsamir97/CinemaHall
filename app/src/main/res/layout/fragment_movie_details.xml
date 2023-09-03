@@ -98,11 +98,11 @@
                 tools:layout_editor_absoluteY="397dp" />
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/addToWishListImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:src="@drawable/baseline_play_arrow_24"
+                app:srcCompat="@drawable/add_to_heart_animated_vector"
                 app:layout_constraintBottom_toBottomOf="@+id/userScoreTitleTextView"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toTopOf="@+id/userScoreTitleTextView"
@@ -110,15 +110,15 @@
                 android:contentDescription="@string/play_trailer" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/wishListStateText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="@string/play_trailer"
+                android:text="@string/add_to_wishlist"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView5"
-                app:layout_constraintStart_toEndOf="@+id/imageView5"
-                app:layout_constraintTop_toTopOf="@+id/imageView5" />
+                app:layout_constraintBottom_toBottomOf="@+id/addToWishListImageView"
+                app:layout_constraintStart_toEndOf="@+id/addToWishListImageView"
+                app:layout_constraintTop_toTopOf="@+id/addToWishListImageView" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline2"
@@ -232,6 +232,7 @@
         layout="@layout/no_internet_dialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"
+        tools:visibility="gone"/>
 
 </RelativeLayout>

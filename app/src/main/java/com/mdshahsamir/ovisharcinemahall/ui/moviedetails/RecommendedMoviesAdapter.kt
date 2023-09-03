@@ -44,7 +44,7 @@ class RecommendedMoviesAdapter(
                 .into(binding.moviePosterImage)
 
             binding.root.setOnClickListener {
-                actionListener.onClickMovie(movie.id)
+                actionListener.onClickMovie(movie)
             }
         }
     }

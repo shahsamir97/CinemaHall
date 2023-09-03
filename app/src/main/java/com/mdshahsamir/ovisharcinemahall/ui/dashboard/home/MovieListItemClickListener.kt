@@ -8,5 +8,5 @@ interface MovieListItemActionListener {
 
     fun onClickRemoveFromWishlist(movie: Movie)
 
-    fun onClickMovie(movieId: Int)
+    fun onClickMovie(movie: Movie)
 }

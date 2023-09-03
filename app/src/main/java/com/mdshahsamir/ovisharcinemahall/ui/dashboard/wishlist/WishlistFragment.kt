@@ -46,9 +46,9 @@ class WishlistFragment : BaseFragment<FragmentWishlistBinding>(), WishListItemAc
         sharedViewModel.removeFromWishList(movie)
     }
 
-    override fun onClickMovie(movieId: Int) {
+    override fun onClickMovie(movie: Movie) {
         runIfInternetAvailable(requireContext(), "You're in offline mode") {
-            val action = WishlistFragmentDirections.actionWishlistFragmentToMovieDetailsFragment(movieId)
+            val action = WishlistFragmentDirections.actionWishlistFragmentToMovieDetailsFragment(movie.id, movie.isAddedToWishlist)
             findNavController().navigate(action)
         }
     }

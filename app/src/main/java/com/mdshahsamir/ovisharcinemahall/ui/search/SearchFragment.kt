@@ -105,9 +105,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), MovieListItemActio
         sharedViewModel.removeFromWishList(movie)
     }
 
-    override fun onClickMovie(movieId: Int) {
+    override fun onClickMovie(movie: Movie) {
         runIfInternetAvailable(requireContext()) {
-            val action = SearchFragmentDirections.actionSearchFragmentToMovieDetailsFragment(movieId)
+            val action = SearchFragmentDirections.actionSearchFragmentToMovieDetailsFragment(movie.id, movie.isAddedToWishlist)
             findNavController().navigate(action)
         }
     }

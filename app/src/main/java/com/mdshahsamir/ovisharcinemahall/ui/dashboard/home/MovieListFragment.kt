@@ -59,6 +59,8 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
                 Toast.makeText(requireContext(), "Something went wrong!", Toast.LENGTH_SHORT).show()
             }
         }
+
+        sharedViewModel.wishList.observe(viewLifecycleOwner) {}
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -85,9 +87,9 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
         sharedViewModel.removeFromWishList(movie)
     }
 
-    override fun onClickMovie(movieId: Int) {
+    override fun onClickMovie(movie: Movie) {
        runIfInternetAvailable(requireContext()) {
-           val action = MovieListFragmentDirections.actionMovieListFragmentToMovieDetailsFragment(movieId)
+           val action = MovieListFragmentDirections.actionMovieListFragmentToMovieDetailsFragment(movie.id, movie.isAddedToWishlist)
            findNavController().navigate(action)
        }
     }

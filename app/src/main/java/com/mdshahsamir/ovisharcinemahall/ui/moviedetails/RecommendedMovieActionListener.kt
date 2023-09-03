@@ -1,6 +1,8 @@
 package com.mdshahsamir.ovisharcinemahall.ui.moviedetails
 
+import com.mdshahsamir.ovisharcinemahall.model.Movie
+
 interface RecommendedMovieActionListener {
 
-    fun onClickMovie(movieId: Int)
+    fun onClickMovie(movie: Movie)
 }

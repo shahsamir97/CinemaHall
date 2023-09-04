@@ -92,6 +92,7 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(), Recomm
                 popularityTextView.text = (movieDetails.voteAverage * 10).toInt().toString() + "%"
                 popularityProgressBar.progress = (movieDetails.voteAverage * 10).toInt()
                 genreTextView.text = getDottedText(movieDetails.genres.map { it.name })
+                adultContentIcon.isVisible = movieDetails.adult
                 binding.wishListStateText.text = if (viewModel.isAddedToWishlist) getString(R.string.in_your_wishlist) else getString(R.string.add_to_wishlist)
                 switchAnimDrawable(viewModel.isAddedToWishlist)
 

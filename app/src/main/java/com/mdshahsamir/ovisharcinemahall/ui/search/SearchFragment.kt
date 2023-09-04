@@ -10,6 +10,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.google.android.material.R.attr.colorOnPrimary
 import com.mdshahsamir.ovisharcinemahall.R
 import com.mdshahsamir.ovisharcinemahall.base.BaseFragment
 import com.mdshahsamir.ovisharcinemahall.base.BaseViewModel
@@ -19,6 +20,7 @@ import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModel
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModelFactory
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.home.MovieListItemActionListener
+import com.mdshahsamir.ovisharcinemahall.util.getColorFromAttribute
 import com.mdshahsamir.ovisharcinemahall.util.runIfInternetAvailable
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>(), MovieListItemActionListener {
@@ -92,8 +94,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), MovieListItemActio
 
         val textView: TextView = searchView.findViewById(androidx.appcompat.R.id.search_src_text)
         textView.apply {
-            setTextColor(Color.WHITE)
-            setHintTextColor(Color.WHITE)
+            setTextColor(getColorFromAttribute(colorOnPrimary, requireContext()))
+            setHintTextColor(getColorFromAttribute(colorOnPrimary, requireContext()))
         }
     }
 

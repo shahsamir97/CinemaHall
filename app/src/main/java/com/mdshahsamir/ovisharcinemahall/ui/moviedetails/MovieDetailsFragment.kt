@@ -93,7 +93,7 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(), Recomm
                 popularityTextView.text = (movieDetails.voteAverage * 10).toInt().toString() + "%"
                 popularityProgressBar.progress = (movieDetails.voteAverage * 10).toInt()
                 genreTextView.text = getDottedText(movieDetails.genres.map { it.name })
-                binding.wishListStateText.text = if (viewModel.isAddedToWishlist) getString(R.string.on_your_wishlist) else getString(R.string.add_to_wishlist)
+                binding.wishListStateText.text = if (viewModel.isAddedToWishlist) getString(R.string.in_your_wishlist) else getString(R.string.add_to_wishlist)
                 switchAnimDrawable(viewModel.isAddedToWishlist)
 
                 addToWishListImageView.setOnClickListener {
@@ -101,7 +101,7 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(), Recomm
                         val movie = Movie(movieDetails.adult, movieDetails.id, movieDetails.originalTitle, movieDetails.overview, movieDetails.posterPath, movieDetails.releaseDate, movieDetails.originalTitle,movieDetails.voteAverage, true)
                         sharedViewModel.addMovieToWishList(movie)
                         runAddToWishlistIconAnimation(viewModel.isAddedToWishlist)
-                        binding.wishListStateText.text = getString(R.string.on_your_wishlist)
+                        binding.wishListStateText.text = getString(R.string.in_your_wishlist)
                     }
                 }
 

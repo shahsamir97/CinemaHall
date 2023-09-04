@@ -3,7 +3,6 @@ package com.mdshahsamir.ovisharcinemahall.util
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.util.TypedValue
 import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import com.mdshahsamir.ovisharcinemahall.model.Movie

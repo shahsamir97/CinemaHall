@@ -44,7 +44,6 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
     override fun setUpViews() {
         setHasOptionsMenu(true)
 
-        sharedViewModel.loadWishList()
         binding.movieRecyclerView.adapter = adapter
     }
 

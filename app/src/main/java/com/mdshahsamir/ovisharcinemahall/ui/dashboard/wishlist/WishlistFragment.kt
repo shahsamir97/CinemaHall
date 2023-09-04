@@ -36,7 +36,7 @@ class WishlistFragment : BaseFragment<FragmentWishlistBinding>(), WishListItemAc
     override fun observeData() {
         super.observeData()
 
-        sharedViewModel.wishList.observe(viewLifecycleOwner) {
+        sharedViewModel.wishList.observeForever {
             binding.emptyWishListText.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
             adapter.submitList(it)
         }

@@ -16,9 +16,7 @@ class DashboardViewModel(private val repo: SharedRepository): BaseViewModel() {
 
     val movieList: Flow<PagingData<Movie>> = repo.fetchTopRatedMovies().cachedIn(viewModelScope)
 
-    private val _wishList = MutableLiveData<List<Movie>>()
-    val wishList: LiveData<List<Movie>> = _wishList
-
+    val wishList: LiveData<List<Movie>> = repo.fetchWishListFromDB()
 
     var allMovies: List<Movie> = listOf()
     var filteredMovies = MutableLiveData(allMovies)
@@ -26,13 +24,6 @@ class DashboardViewModel(private val repo: SharedRepository): BaseViewModel() {
     fun filteredMoviesByTitle(query: String) {
          val movies = allMovies
         filteredMovies.value = movies.filter { it.title.contains(query, true) }
-    }
-
-    fun loadWishList() {
-        viewModelScope.launch(Dispatchers.IO) {
-            val wishList = repo.fetchWishListFromDB()
-            _wishList.postValue(wishList)
-        }
     }
 
     fun addMovieToWishList(movie: Movie) {

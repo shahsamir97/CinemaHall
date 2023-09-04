@@ -10,8 +10,11 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
-class MovieDetailsViewModel(movieId: Int, repo: MovieDetailsRepository) :
-    BaseViewModel() {
+class MovieDetailsViewModel(
+    movieId: Int,
+    var isAddedToWishlist: Boolean,
+    repo: MovieDetailsRepository
+) : BaseViewModel() {
 
     val movieDetailsFlow: Flow<MovieDetailsUiState> =
         repo.fetchMovieDetails(movieId).map {
@@ -23,11 +26,11 @@ class MovieDetailsViewModel(movieId: Int, repo: MovieDetailsRepository) :
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000)
         )
-    }
+}
 
 sealed class MovieDetailsUiState {
 
     object Loading : MovieDetailsUiState()
-    data class Success(val movieDetails: MovieDetails, val recommendedMovies: List<Movie>) : MovieDetailsUiState()
-    data class Error(val exception: Throwable) : MovieDetailsUiState()
+    data class Success(val movieDetails: MovieDetails, val recommendedMovies: List<Movie>) :
+        MovieDetailsUiState()
 }

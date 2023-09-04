@@ -1,7 +1,10 @@
 package com.mdshahsamir.ovisharcinemahall.ui.moviedetails
 
+import android.graphics.drawable.AnimatedVectorDrawable
 import android.view.View
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -14,9 +17,12 @@ import com.mdshahsamir.ovisharcinemahall.R
 import com.mdshahsamir.ovisharcinemahall.base.BaseFragment
 import com.mdshahsamir.ovisharcinemahall.base.BaseViewModel
 import com.mdshahsamir.ovisharcinemahall.databinding.FragmentMovieDetailsBinding
+import com.mdshahsamir.ovisharcinemahall.di.DashboardRepositoryInjector
 import com.mdshahsamir.ovisharcinemahall.di.MovieDetailsRepoDependencyInjector
 import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.model.MovieDetails
+import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModel
+import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModelFactory
 import com.mdshahsamir.ovisharcinemahall.util.getDottedText
 import com.mdshahsamir.ovisharcinemahall.util.runIfInternetAvailable
 import kotlinx.coroutines.launch
@@ -24,13 +30,18 @@ import kotlinx.coroutines.launch
 class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(), RecommendedMovieActionListener {
 
     private val args: MovieDetailsFragmentArgs by navArgs()
+    private lateinit var drawableAnimation: AnimatedVectorDrawable
 
     private val viewModel: MovieDetailsViewModel by viewModels {
-        MovieDetailsViewModelFactory(args.movieId, MovieDetailsRepoDependencyInjector.getMovieListRepository())
+        MovieDetailsViewModelFactory(args.movieId, args.isOnWishList, MovieDetailsRepoDependencyInjector.getMovieListRepository())
     }
 
     private val adapter: RecommendedMoviesAdapter by lazy {
         RecommendedMoviesAdapter(Glide.with(requireContext()), this)
+    }
+
+    private val sharedViewModel: DashboardViewModel by activityViewModels {
+        DashboardViewModelFactory(DashboardRepositoryInjector(requireContext()).getSharedRepository())
     }
 
     override fun getViewBinding(): FragmentMovieDetailsBinding =
@@ -45,7 +56,6 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(), Recomm
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.movieDetailsFlow.collect { uiState ->
                     binding.dataLoadingProgressBar.isVisible = uiState is MovieDetailsUiState.Loading
-                    binding.noInternetDialog.root.isVisible = uiState is MovieDetailsUiState.Error
                     binding.movieDetailsLayout.isVisible = uiState is MovieDetailsUiState.Success
 
                     when (uiState) {
@@ -76,28 +86,59 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(), Recomm
             dataLoadingProgressBar.visibility = View.GONE
             movieDetailsLayout.visibility = View.VISIBLE
 
-            movieDetails?.let { movie ->
-                titleTextView.text = movie.originalTitle + " (${movie.getReleaseYear()})"
-                overviewTextView.text = movie.overview
-                popularityTextView.text = (movie.voteAverage * 10).toInt().toString() + "%"
-                popularityProgressBar.progress = (movie.voteAverage * 10).toInt()
-                genreTextView.text = getDottedText(movie.genres.map { it.name })
+            movieDetails?.let { movieDetails ->
+                titleTextView.text = movieDetails.originalTitle + " (${movieDetails.getReleaseYear()})"
+                overviewTextView.text = movieDetails.overview
+                popularityTextView.text = (movieDetails.voteAverage * 10).toInt().toString() + "%"
+                popularityProgressBar.progress = (movieDetails.voteAverage * 10).toInt()
+                genreTextView.text = getDottedText(movieDetails.genres.map { it.name })
+                binding.wishListStateText.text = if (viewModel.isAddedToWishlist) getString(R.string.in_your_wishlist) else getString(R.string.add_to_wishlist)
+                switchAnimDrawable(viewModel.isAddedToWishlist)
 
-                Glide.with(requireContext()).load(BuildConfig.IMAGE_BASE_URL + movie.posterPath)
+                addToWishListImageView.setOnClickListener {
+                    if (!viewModel.isAddedToWishlist) {
+                        val movie = Movie(movieDetails.adult, movieDetails.id, movieDetails.originalTitle, movieDetails.overview, movieDetails.posterPath, movieDetails.releaseDate, movieDetails.originalTitle,movieDetails.voteAverage, true)
+                        sharedViewModel.addMovieToWishList(movie)
+                        runAddToWishlistIconAnimation(viewModel.isAddedToWishlist)
+                        binding.wishListStateText.text = getString(R.string.in_your_wishlist)
+                    }
+                }
+
+                Glide.with(requireContext()).load(BuildConfig.IMAGE_BASE_URL + movieDetails.posterPath)
                     .placeholder(R.drawable.loading_animation)
                     .into(moviePosterImageView)
 
-                Glide.with(requireContext()).load(BuildConfig.IMAGE_BASE_URL + movie.backdropPath)
+                Glide.with(requireContext()).load(BuildConfig.IMAGE_BASE_URL + movieDetails.backdropPath)
                     .placeholder(R.drawable.loading_animation)
                     .into(backgroundPosterImageView)
             }
         }
     }
 
-    override fun onClickMovie(movieId: Int) {
+    override fun onClickMovie(movie: Movie) {
         runIfInternetAvailable(requireContext()) {
-            val action = MovieDetailsFragmentDirections.actionMovieDetailsFragmentSelf(movieId)
+            val action = MovieDetailsFragmentDirections.actionMovieDetailsFragmentSelf(movie.id, movie.isAddedToWishlist)
             findNavController().navigate(action)
+        }
+    }
+
+    private fun runAddToWishlistIconAnimation(isAddedToWishList: Boolean) {
+        viewModel.isAddedToWishlist = !viewModel.isAddedToWishlist
+        switchAnimDrawable(isAddedToWishList)
+        drawableAnimation.start()
+    }
+
+    private fun switchAnimDrawable(isAddedToWishList: Boolean) {
+        binding.addToWishListImageView.apply {
+            setImageDrawable(
+                ResourcesCompat.getDrawable(
+                    resources,
+                    if (isAddedToWishList) R.drawable.heart_to_add_animated_vector else R.drawable.add_to_heart_animated_vector,
+                    null
+                )
+            )
+
+            drawableAnimation = drawable as AnimatedVectorDrawable
         }
     }
 }

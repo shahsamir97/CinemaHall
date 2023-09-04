@@ -50,7 +50,7 @@ class MovieListAdapter(
                     .into(moviePosterImage)
 
                 root.setOnClickListener {
-                    itemActionListener.onClickMovie(movie.id)
+                    itemActionListener.onClickMovie(movie)
                 }
 
                 imageView.setOnClickListener {

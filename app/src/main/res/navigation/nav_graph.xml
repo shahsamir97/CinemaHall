@@ -30,6 +30,9 @@
             android:id="@+id/action_movieDetailsFragment_self"
             app:destination="@id/movieDetailsFragment"
             app:launchSingleTop="true"/>
+        <argument
+            android:name="isOnWishList"
+            app:argType="boolean" />
     </fragment>
 
     <fragment

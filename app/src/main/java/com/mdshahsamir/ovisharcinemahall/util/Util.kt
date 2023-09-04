@@ -3,6 +3,7 @@ package com.mdshahsamir.ovisharcinemahall.util
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.util.TypedValue
 import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import com.mdshahsamir.ovisharcinemahall.model.Movie
@@ -48,4 +49,13 @@ fun runIfInternetAvailable(context: Context, noInternetMessage: String? = null, 
     } else {
         Toast.makeText(context, noInternetMessage ?: "You're not connected to internet", Toast.LENGTH_SHORT).show()
     }
+}
+
+fun getColorFromAttribute(colorRes: Int, context: Context): Int {
+    val attrs = intArrayOf(colorRes)
+    val typedArray = context.obtainStyledAttributes(attrs)
+    val color = typedArray.getColor(0, 0) // Default color value (0) in case the attribute is not found
+    typedArray.recycle()
+
+    return color
 }

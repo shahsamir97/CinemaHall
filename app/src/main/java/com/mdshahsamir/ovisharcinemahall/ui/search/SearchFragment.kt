@@ -1,6 +1,5 @@
 package com.mdshahsamir.ovisharcinemahall.ui.search
 
-import android.graphics.Color
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem

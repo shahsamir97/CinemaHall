@@ -56,7 +56,6 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(), Recomm
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.movieDetailsFlow.collect { uiState ->
                     binding.dataLoadingProgressBar.isVisible = uiState is MovieDetailsUiState.Loading
-                    binding.noInternetDialog.root.isVisible = uiState is MovieDetailsUiState.Error
                     binding.movieDetailsLayout.isVisible = uiState is MovieDetailsUiState.Success
 
                     when (uiState) {

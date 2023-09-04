@@ -66,9 +66,6 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
         adapter.addLoadStateListener {
             binding.progressBar.isVisible = it.refresh == LoadState.Loading
             binding.noInternetImageView.root.isVisible = it.refresh is LoadState.Error
-            if (it.refresh is LoadState.Error) {
-                Toast.makeText(requireContext(), "Something went wrong!", Toast.LENGTH_SHORT).show()
-            }
         }
 
         sharedViewModel.wishList.observe(viewLifecycleOwner) {}

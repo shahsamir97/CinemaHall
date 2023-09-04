@@ -3,7 +3,6 @@ package com.mdshahsamir.ovisharcinemahall.ui.dashboard.home
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle

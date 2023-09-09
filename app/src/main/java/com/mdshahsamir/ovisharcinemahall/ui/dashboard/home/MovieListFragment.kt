@@ -27,8 +27,8 @@ import kotlinx.coroutines.launch
 class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
     MovieListItemActionListener {
 
-    private val adapter: MovieListAdapter by lazy {
-        MovieListAdapter(Glide.with(requireContext()), this)
+    private val adapter: MovieListAdapter2 by lazy {
+        MovieListAdapter2(Glide.with(requireContext()), this)
     }
 
     private val sharedViewModel: DashboardViewModel by activityViewModels {

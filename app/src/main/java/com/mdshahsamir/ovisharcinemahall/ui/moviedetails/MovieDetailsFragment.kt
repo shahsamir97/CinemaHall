@@ -36,8 +36,8 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(), Recomm
         MovieDetailsViewModelFactory(args.movieId, args.isOnWishList, MovieDetailsRepoDependencyInjector.getMovieListRepository())
     }
 
-    private val adapter: RecommendedMoviesAdapter by lazy {
-        RecommendedMoviesAdapter(Glide.with(requireContext()), this)
+    private val adapter: RecommendedMoviesAdapter2 by lazy {
+        RecommendedMoviesAdapter2(Glide.with(requireContext()), this)
     }
 
     private val sharedViewModel: DashboardViewModel by activityViewModels {

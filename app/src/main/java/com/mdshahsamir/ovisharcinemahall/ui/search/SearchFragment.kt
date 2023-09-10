@@ -28,8 +28,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), MovieListItemActio
         DashboardViewModelFactory(DashboardRepositoryInjector(requireContext()).getSharedRepository())
     }
 
-    private val adapter: SearchListAdapter by lazy {
-        SearchListAdapter(Glide.with(requireContext()), this)
+    private val adapter: SearchListAdapter2 by lazy {
+        SearchListAdapter2(Glide.with(requireContext()), this)
     }
 
     override fun setUpViews() {

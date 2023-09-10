@@ -19,8 +19,8 @@ class WishlistFragment : BaseFragment<FragmentWishlistBinding>(), WishListItemAc
         DashboardViewModelFactory(DashboardRepositoryInjector(requireContext()).getSharedRepository())
     }
 
-    private val adapter: WishListAdapter by lazy {
-        WishListAdapter(Glide.with(requireContext()), this)
+    private val adapter: WishListAdapter2 by lazy {
+        WishListAdapter2(Glide.with(requireContext()), this)
     }
 
     override fun getViewBinding(): FragmentWishlistBinding = FragmentWishlistBinding.inflate(layoutInflater)

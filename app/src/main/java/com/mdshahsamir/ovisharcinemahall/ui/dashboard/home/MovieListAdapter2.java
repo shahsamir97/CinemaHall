@@ -5,11 +5,9 @@ import android.graphics.drawable.AnimatedVectorDrawable;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import androidx.core.content.res.ResourcesCompat;
 import androidx.paging.PagingDataAdapter;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.RequestManager;
 import com.mdshahsamir.ovisharcinemahall.BuildConfig;
 import com.mdshahsamir.ovisharcinemahall.R;

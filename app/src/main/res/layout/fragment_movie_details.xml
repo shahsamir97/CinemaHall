@@ -172,6 +172,31 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView5"
                 tools:text="@string/lorem_ipsum" />
 
+            <TextView
+                android:id="@+id/favoriteMomentsTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Favorite Moments"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/overviewTextView" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/favoriteMomentRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/favoriteMomentsTitleTextView"
+                tools:listitem="@layout/favorite_moment_item"/>
+
             <View
                 android:id="@+id/view"
                 android:layout_width="2dp"
@@ -218,7 +243,7 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/overviewTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/favoriteMomentRecyclerView" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recommendedMovieRecyclerView"

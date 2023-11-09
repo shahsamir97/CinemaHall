@@ -1,13 +1,21 @@
 package com.mdshahsamir.ovisharcinemahall
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.webkit.PermissionRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.security.PermissionCollection
+import java.security.Permissions
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,6 +43,25 @@ class MainActivity : AppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(setOf(R.id.movieListFragment, R.id.wishlistFragment))
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
         NavigationUI.setupWithNavController(bottomNav, navController)
+
+        val requestPermissions =
+            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+
+            }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED
+                ) != PackageManager.PERMISSION_GRANTED
+            )
+                requestPermissions.launch(
+                    arrayOf(
+                        Manifest.permission.READ_MEDIA_IMAGES,
+                        Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED
+                    )
+                )
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

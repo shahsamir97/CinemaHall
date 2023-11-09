@@ -1,7 +1,10 @@
 package com.mdshahsamir.ovisharcinemahall.ui.moviedetails
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.mdshahsamir.ovisharcinemahall.base.BaseViewModel
+import com.mdshahsamir.ovisharcinemahall.model.FavoriteMoment
 import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.model.MovieDetails
 import kotlinx.coroutines.flow.Flow
@@ -16,6 +19,10 @@ class MovieDetailsViewModel(
     repo: MovieDetailsRepository
 ) : BaseViewModel() {
 
+    private val _favoriteMoments = MutableLiveData(arrayListOf(FavoriteMoment("")))
+    val favoriteMoments: LiveData<ArrayList<FavoriteMoment>>
+        get() = _favoriteMoments
+
     val movieDetailsFlow: Flow<MovieDetailsUiState> =
         repo.fetchMovieDetails(movieId).map {
             MovieDetailsUiState.Success(it.first, it.second)
@@ -26,6 +33,12 @@ class MovieDetailsViewModel(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000)
         )
+
+    fun addFavoriteMoment(moment: FavoriteMoment) {
+        val temp = _favoriteMoments.value
+        temp?.add(moment)
+        _favoriteMoments.value = temp
+    }
 }
 
 sealed class MovieDetailsUiState {

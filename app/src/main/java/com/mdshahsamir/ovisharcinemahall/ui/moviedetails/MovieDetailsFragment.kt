@@ -68,12 +68,11 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        pickMedia = registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()) { uri ->
+        pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             // Callback is invoked after the user selects a media item or closes the
             // photo picker.
             if (uri != null) {
-                //viewModel.addFavoriteMoment(FavoriteMoment(uri.path!!))
-                Log.d("PhotoPicker", "Selected URI: $uri")
+                viewModel.addFavoriteMoment(FavoriteMoment(uri))
             } else {
                 Log.d("PhotoPicker", "No media selected")
             }

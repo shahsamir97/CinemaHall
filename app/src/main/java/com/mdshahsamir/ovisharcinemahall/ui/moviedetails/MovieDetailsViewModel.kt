@@ -19,7 +19,7 @@ class MovieDetailsViewModel(
     repo: MovieDetailsRepository
 ) : BaseViewModel() {
 
-    private val _favoriteMoments = MutableLiveData(arrayListOf(FavoriteMoment("")))
+    private val _favoriteMoments = MutableLiveData(arrayListOf(FavoriteMoment()))
     val favoriteMoments: LiveData<ArrayList<FavoriteMoment>>
         get() = _favoriteMoments
 

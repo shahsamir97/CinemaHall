@@ -1,11 +1,11 @@
 package com.mdshahsamir.ovisharcinemahall.ui.moviedetails
 
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.mdshahsamir.ovisharcinemahall.databinding.FavoriteMomentItemBinding
 import com.mdshahsamir.ovisharcinemahall.model.FavoriteMoment
 
@@ -23,12 +23,13 @@ class FavoriteMomentAdapter(private val favoriteMomentActionListener: FavoriteMo
     inner class FavoriteMomentViewHolder(private val binding: FavoriteMomentItemBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(moment: FavoriteMoment) {
-            if (moment.imagePath.isEmpty()) {
+            if (moment.imageUri == null) {
                 binding.root.setOnClickListener {
                     favoriteMomentActionListener.onClickAddMoment()
                 }
 
-                Glide.with(binding.root.context).load(moment.imagePath).into(binding.image)
+            } else {
+               binding.image.setImageURI(moment.imageUri)
             }
         }
     }
@@ -36,7 +37,7 @@ class FavoriteMomentAdapter(private val favoriteMomentActionListener: FavoriteMo
 
 object FavoriteMomentDiff: DiffUtil.ItemCallback<FavoriteMoment>() {
     override fun areItemsTheSame(oldItem: FavoriteMoment, newItem: FavoriteMoment): Boolean {
-        return oldItem.imagePath == newItem.imagePath
+        return oldItem.imageUri?.path == newItem.imageUri?.path
     }
 
     override fun areContentsTheSame(oldItem: FavoriteMoment, newItem: FavoriteMoment): Boolean {

@@ -12,8 +12,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class DashboardViewModel(private val repo: SharedRepository): BaseViewModel() {
+class DashboardViewModel @Inject constructor(private val repo: SharedRepository): BaseViewModel() {
 
     val movieList: Flow<PagingData<Movie>> = repo.fetchTopRatedMovies().cachedIn(viewModelScope).map{ pagingData ->
         pagingData.map { movie ->

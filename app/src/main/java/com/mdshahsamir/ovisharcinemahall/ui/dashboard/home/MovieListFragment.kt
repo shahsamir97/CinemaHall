@@ -1,18 +1,18 @@
 package com.mdshahsamir.ovisharcinemahall.ui.dashboard.home
 
+import android.content.Context
 import android.util.Log
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.mdshahsamir.ovisharcinemahall.MyApplication
 import com.mdshahsamir.ovisharcinemahall.base.BaseFragment
 import com.mdshahsamir.ovisharcinemahall.base.BaseViewModel
 import com.mdshahsamir.ovisharcinemahall.databinding.FragmentMovieListBinding
-import com.mdshahsamir.ovisharcinemahall.di.DashboardRepositoryInjector
 import com.mdshahsamir.ovisharcinemahall.model.Movie
-import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModelFactory
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
     MovieListItemActionListener {
@@ -21,8 +21,12 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
         MovieListAdapter(Glide.with(requireContext()), this)
     }
 
-    private val sharedViewModel: DashboardViewModel by activityViewModels {
-        DashboardViewModelFactory(DashboardRepositoryInjector(requireContext()).getSharedRepository())
+    @Inject
+    lateinit var sharedViewModel: DashboardViewModel
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (requireActivity().application as MyApplication).appComponent.inject(this)
     }
 
     override fun getViewBinding(): FragmentMovieListBinding =

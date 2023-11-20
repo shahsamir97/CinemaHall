@@ -9,6 +9,7 @@ import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.network.MovieAPIService
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.home.MovieListPagingSource
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
 interface SharedRepository {
 
@@ -21,7 +22,7 @@ interface SharedRepository {
     fun deleteMovieFromDB(movie: Movie)
 }
 
-class SharedRepositoryIml(
+class SharedRepositoryIml @Inject constructor(
     private val movieAPIService: MovieAPIService,
     private val movieDao: MovieDao
 ) : SharedRepository {

@@ -10,23 +10,4 @@ import com.mdshahsamir.ovisharcinemahall.model.Movie
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun movieDao() : MovieDao
-
-    companion object {
-
-        @Volatile
-        private var INSTANCE: AppDatabase? = null
-        private const val DB_NAME = "movie_database"
-
-        fun getDatabase(context: Context) : AppDatabase {
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    AppDatabase::class.java,
-                    DB_NAME
-                ).build()
-                INSTANCE = instance
-                instance
-            }
-        }
-    }
 }

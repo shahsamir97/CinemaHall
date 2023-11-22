@@ -1,9 +1,11 @@
 package com.mdshahsamir.ovisharcinemahall.ui.dashboard.wishlist
 
+import android.content.Context
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.mdshahsamir.ovisharcinemahall.MyApplication
 import com.mdshahsamir.ovisharcinemahall.base.BaseFragment
 import com.mdshahsamir.ovisharcinemahall.base.BaseViewModel
 import com.mdshahsamir.ovisharcinemahall.databinding.FragmentWishlistBinding
@@ -12,12 +14,11 @@ import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModel
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModelFactory
 import com.mdshahsamir.ovisharcinemahall.util.runIfInternetAvailable
+import javax.inject.Inject
 
 class WishlistFragment : BaseFragment<FragmentWishlistBinding>(), WishListItemActionListener {
 
-    private val sharedViewModel: DashboardViewModel by activityViewModels {
-        DashboardViewModelFactory(DashboardRepositoryInjector(requireContext()).getSharedRepository())
-    }
+     @Inject lateinit var sharedViewModel: DashboardViewModel
 
     private val adapter: WishListAdapter by lazy {
         WishListAdapter(Glide.with(requireContext()), this)
@@ -26,6 +27,12 @@ class WishlistFragment : BaseFragment<FragmentWishlistBinding>(), WishListItemAc
     override fun getViewBinding(): FragmentWishlistBinding = FragmentWishlistBinding.inflate(layoutInflater)
 
     override fun getViewModel(): BaseViewModel = sharedViewModel
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        (requireActivity().application as MyApplication).appComponent.inject(this)
+    }
 
     override fun setUpViews() {
         super.setUpViews()

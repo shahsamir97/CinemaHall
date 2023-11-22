@@ -1,5 +1,6 @@
 package com.mdshahsamir.ovisharcinemahall.ui.dashboard.home
 
+import android.content.Context
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -11,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.paging.map
 import com.bumptech.glide.Glide
+import com.mdshahsamir.ovisharcinemahall.MyApplication
 import com.mdshahsamir.ovisharcinemahall.R
 import com.mdshahsamir.ovisharcinemahall.base.BaseFragment
 import com.mdshahsamir.ovisharcinemahall.base.BaseViewModel
@@ -35,6 +37,11 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
         FragmentMovieListBinding.inflate(layoutInflater)
 
     override fun getViewModel(): BaseViewModel = sharedViewModel
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (requireActivity().application as MyApplication).appComponent.inject(this)
+    }
 
     override fun setUpViews() {
         setHasOptionsMenu(true)

@@ -15,7 +15,7 @@ abstract class AppDatabase : RoomDatabase() {
 
         @Volatile
         private var INSTANCE: AppDatabase? = null
-        private const val DB_NAME = "movie_database"
+        const val DB_NAME = "movie_database"
 
         fun getDatabase(context: Context) : AppDatabase {
             return INSTANCE ?: synchronized(this) {

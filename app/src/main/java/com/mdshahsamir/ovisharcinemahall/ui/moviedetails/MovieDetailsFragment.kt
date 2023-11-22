@@ -1,5 +1,6 @@
 package com.mdshahsamir.ovisharcinemahall.ui.moviedetails
 
+import android.content.Context
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
@@ -13,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.mdshahsamir.ovisharcinemahall.BuildConfig
+import com.mdshahsamir.ovisharcinemahall.MyApplication
 import com.mdshahsamir.ovisharcinemahall.R
 import com.mdshahsamir.ovisharcinemahall.base.BaseFragment
 import com.mdshahsamir.ovisharcinemahall.base.BaseViewModel
@@ -48,6 +50,10 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(), Recomm
         FragmentMovieDetailsBinding.inflate(layoutInflater)
 
     override fun getViewModel(): BaseViewModel = viewModel
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+    }
 
     override fun observeData() {
         super.observeData()

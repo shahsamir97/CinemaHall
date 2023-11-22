@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class DashboardViewModel @Inject constructor(private val repo: SharedRepository): BaseViewModel() {
+class DashboardViewModel @Inject constructor(private val repo: DashboardRepository): BaseViewModel() {
 
     val movieList: Flow<PagingData<Movie>> = repo.fetchTopRatedMovies().cachedIn(viewModelScope)
 

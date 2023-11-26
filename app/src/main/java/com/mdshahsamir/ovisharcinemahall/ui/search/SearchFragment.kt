@@ -1,5 +1,6 @@
 package com.mdshahsamir.ovisharcinemahall.ui.search
 
+import android.content.Context
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -10,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.android.material.R.attr.colorOnPrimary
+import com.mdshahsamir.ovisharcinemahall.MyApplication
 import com.mdshahsamir.ovisharcinemahall.R
 import com.mdshahsamir.ovisharcinemahall.base.BaseFragment
 import com.mdshahsamir.ovisharcinemahall.base.BaseViewModel
@@ -21,6 +23,7 @@ import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModelFactory
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.home.MovieListItemActionListener
 import com.mdshahsamir.ovisharcinemahall.util.getColorFromAttribute
 import com.mdshahsamir.ovisharcinemahall.util.runIfInternetAvailable
+import javax.inject.Inject
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>(), MovieListItemActionListener {
 

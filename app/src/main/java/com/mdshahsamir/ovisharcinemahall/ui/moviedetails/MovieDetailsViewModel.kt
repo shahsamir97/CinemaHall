@@ -17,7 +17,7 @@ class MovieDetailsViewModel(
 ) : BaseViewModel() {
 
     val movieDetailsFlow: Flow<MovieDetailsUiState> =
-        repo.fetchMovieDetails(movieId).map {
+            repo.fetchMovieDetails(movieId).map {
             MovieDetailsUiState.Success(it.first, it.second)
         }.catch { e ->
             showMessage.value = "Something went wrong"

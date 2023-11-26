@@ -40,7 +40,8 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (requireActivity().application as MyApplication).appComponent.inject(this)
+        val homeComponent = (requireActivity().application as MyApplication).appComponent.homeComponent().create()
+        homeComponent.inject(this)
     }
 
     override fun setUpViews() {

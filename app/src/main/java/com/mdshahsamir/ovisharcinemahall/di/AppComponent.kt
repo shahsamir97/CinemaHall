@@ -1,15 +1,15 @@
 package com.mdshahsamir.ovisharcinemahall.di
 
 import android.content.Context
-import com.mdshahsamir.ovisharcinemahall.MainActivity
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.home.MovieListFragment
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.wishlist.WishlistFragment
+import com.mdshahsamir.ovisharcinemahall.ui.search.SearchFragment
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [NetworkModule::class, DatabaseModule::class])
+@Component(modules = [AppModule::class, AppSubComponents::class, NetworkModule::class, DatabaseModule::class])
 interface AppComponent {
 
     @Component.Factory
@@ -18,7 +18,7 @@ interface AppComponent {
         fun create(@BindsInstance context: Context): AppComponent
     }
 
-    fun inject(fragment: MovieListFragment)
+    fun homeComponent(): HomeComponent.Factory
 
-    fun inject(fragment: WishlistFragment)
+    fun wishlistComponent(): WishlistComponent.Factory
 }

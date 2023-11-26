@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 class WishlistFragment : BaseFragment<FragmentWishlistBinding>(), WishListItemActionListener {
 
-     @Inject lateinit var sharedViewModel: DashboardViewModel
+    @Inject lateinit var sharedViewModel: DashboardViewModel
 
     private val adapter: WishListAdapter by lazy {
         WishListAdapter(Glide.with(requireContext()), this)
@@ -31,7 +31,8 @@ class WishlistFragment : BaseFragment<FragmentWishlistBinding>(), WishListItemAc
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        (requireActivity().application as MyApplication).appComponent.inject(this)
+        val homeComponent = (requireActivity().application as MyApplication).appComponent.wishlistComponent().create()
+        homeComponent.inject(this)
     }
 
     override fun setUpViews() {

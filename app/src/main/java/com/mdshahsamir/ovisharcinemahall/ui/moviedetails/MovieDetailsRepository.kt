@@ -7,13 +7,14 @@ import com.mdshahsamir.ovisharcinemahall.util.toMovie
 import com.mdshahsamir.ovisharcinemahall.util.toMovieDetails
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
 interface MovieDetailsRepository {
 
     fun fetchMovieDetails(movieId: Int): Flow<Pair<MovieDetails, List<Movie>>>
 }
 
-class MovieDetailsRepositoryImpl(private val apiService: MovieAPIService) : MovieDetailsRepository {
+class MovieDetailsRepositoryImpl @Inject constructor(private val apiService: MovieAPIService) : MovieDetailsRepository {
 
     override fun fetchMovieDetails(movieId: Int): Flow<Pair<MovieDetails, List<Movie>>> =
         flow {

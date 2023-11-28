@@ -5,8 +5,6 @@ import android.graphics.drawable.AnimatedVectorDrawable
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -19,32 +17,30 @@ import com.mdshahsamir.ovisharcinemahall.R
 import com.mdshahsamir.ovisharcinemahall.base.BaseFragment
 import com.mdshahsamir.ovisharcinemahall.base.BaseViewModel
 import com.mdshahsamir.ovisharcinemahall.databinding.FragmentMovieDetailsBinding
-import com.mdshahsamir.ovisharcinemahall.di.DashboardRepositoryInjector
-import com.mdshahsamir.ovisharcinemahall.di.MovieDetailsRepoDependencyInjector
 import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.model.MovieDetails
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModel
-import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModelFactory
 import com.mdshahsamir.ovisharcinemahall.util.getDottedText
 import com.mdshahsamir.ovisharcinemahall.util.runIfInternetAvailable
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(), RecommendedMovieActionListener {
 
     private val args: MovieDetailsFragmentArgs by navArgs()
     private lateinit var drawableAnimation: AnimatedVectorDrawable
 
-    private val viewModel: MovieDetailsViewModel by viewModels {
-        MovieDetailsViewModelFactory(args.movieId, args.isOnWishList, MovieDetailsRepoDependencyInjector.getMovieListRepository())
+    private  val viewModel: MovieDetailsViewModel by lazy {
+        movieDetailsVMFactory.create(args.movieId, args.isOnWishList)
     }
 
     private val adapter: RecommendedMoviesAdapter by lazy {
         RecommendedMoviesAdapter(Glide.with(requireContext()), this)
     }
 
-    private val sharedViewModel: DashboardViewModel by activityViewModels {
-        DashboardViewModelFactory(DashboardRepositoryInjector(requireContext()).getSharedRepository())
-    }
+    @Inject lateinit var movieDetailsVMFactory: MovieDetailsViewModel.MovieDetailsVMFactory
+
+    @Inject lateinit var sharedViewModel: DashboardViewModel
 
     override fun getViewBinding(): FragmentMovieDetailsBinding =
         FragmentMovieDetailsBinding.inflate(layoutInflater)
@@ -53,6 +49,8 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(), Recomm
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        val movieDetailsComponent = (requireActivity().application as MyApplication).appComponent.movieDetailsComponent().create()
+        movieDetailsComponent.inject(this)
     }
 
     override fun observeData() {

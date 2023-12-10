@@ -21,9 +21,12 @@ import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModel
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModelFactory
 import com.mdshahsamir.ovisharcinemahall.util.runIfInternetAvailable
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
     MovieListItemActionListener {
 
@@ -31,9 +34,7 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(),
         MovieListAdapter(Glide.with(requireContext()), this)
     }
 
-    private val sharedViewModel: DashboardViewModel by activityViewModels {
-        DashboardViewModelFactory(DashboardRepositoryInjector(requireContext()).getSharedRepository())
-    }
+    @Inject lateinit var sharedViewModel: DashboardViewModel
 
     override fun getViewBinding(): FragmentMovieListBinding =
         FragmentMovieListBinding.inflate(layoutInflater)

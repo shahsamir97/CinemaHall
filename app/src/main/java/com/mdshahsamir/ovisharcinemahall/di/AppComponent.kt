@@ -1,7 +1,6 @@
 package com.mdshahsamir.ovisharcinemahall.di
 
 import android.content.Context
-import com.mdshahsamir.ovisharcinemahall.ui.moviedetails.MovieDetailsFragment
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton

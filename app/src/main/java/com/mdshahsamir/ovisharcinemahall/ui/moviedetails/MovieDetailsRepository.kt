@@ -1,5 +1,6 @@
 package com.mdshahsamir.ovisharcinemahall.ui.moviedetails
 
+import com.mdshahsamir.ovisharcinemahall.di.FragmentScope
 import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.model.MovieDetails
 import com.mdshahsamir.ovisharcinemahall.network.MovieAPIService
@@ -14,6 +15,7 @@ interface MovieDetailsRepository {
     fun fetchMovieDetails(movieId: Int): Flow<Pair<MovieDetails, List<Movie>>>
 }
 
+@FragmentScope
 class MovieDetailsRepositoryImpl @Inject constructor(private val apiService: MovieAPIService) : MovieDetailsRepository {
 
     override fun fetchMovieDetails(movieId: Int): Flow<Pair<MovieDetails, List<Movie>>> =

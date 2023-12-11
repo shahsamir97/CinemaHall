@@ -30,15 +30,11 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(), Recomm
     private val args: MovieDetailsFragmentArgs by navArgs()
     private lateinit var drawableAnimation: AnimatedVectorDrawable
 
-    private  val viewModel: MovieDetailsViewModel by lazy {
-        movieDetailsVMFactory.create(args.movieId, args.isOnWishList)
-    }
+    @Inject lateinit var viewModel: MovieDetailsViewModel
 
     private val adapter: RecommendedMoviesAdapter by lazy {
         RecommendedMoviesAdapter(Glide.with(requireContext()), this)
     }
-
-    @Inject lateinit var movieDetailsVMFactory: MovieDetailsViewModel.MovieDetailsVMFactory
 
     @Inject lateinit var sharedViewModel: DashboardViewModel
 
@@ -56,9 +52,11 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(), Recomm
     override fun observeData() {
         super.observeData()
 
+        viewModel.isAddedToWishlist = args.isOnWishList
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.movieDetailsFlow.collect { uiState ->
+                viewModel.createMovieDetailsFlow(args.movieId).collect { uiState ->
                     binding.dataLoadingProgressBar.isVisible = uiState is MovieDetailsUiState.Loading
                     binding.movieDetailsLayout.isVisible = uiState is MovieDetailsUiState.Success
 

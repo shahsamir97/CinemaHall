@@ -9,8 +9,9 @@ import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.network.MovieAPIService
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.home.MovieListPagingSource
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-interface SharedRepository {
+interface DashboardRepository {
 
     fun fetchWishListFromDB(): LiveData<List<Movie>>
 
@@ -21,10 +22,10 @@ interface SharedRepository {
     fun deleteMovieFromDB(movie: Movie)
 }
 
-class SharedRepositoryIml(
+class DashboardRepositoryIml @Inject constructor(
     private val movieAPIService: MovieAPIService,
     private val movieDao: MovieDao
-) : SharedRepository {
+) : DashboardRepository {
 
     override fun fetchTopRatedMovies(): Flow<PagingData<Movie>> {
 

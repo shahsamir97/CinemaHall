@@ -12,12 +12,13 @@ import com.mdshahsamir.ovisharcinemahall.model.Movie
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModel
 import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardViewModelFactory
 import com.mdshahsamir.ovisharcinemahall.util.runIfInternetAvailable
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class WishlistFragment : BaseFragment<FragmentWishlistBinding>(), WishListItemActionListener {
 
-    private val sharedViewModel: DashboardViewModel by activityViewModels {
-        DashboardViewModelFactory(DashboardRepositoryInjector(requireContext()).getSharedRepository())
-    }
+    @Inject lateinit var sharedViewModel: DashboardViewModel
 
     private val adapter: WishListAdapter by lazy {
         WishListAdapter(Glide.with(requireContext()), this)

@@ -3,7 +3,7 @@ package com.mdshahsamir.ovisharcinemahall.ui.dashboard
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
-class DashboardViewModelFactory(private val repo: SharedRepository) : ViewModelProvider.Factory {
+class DashboardViewModelFactory(private val repo: DashboardRepository) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(DashboardViewModel::class.java)) {

@@ -4,13 +4,13 @@ import android.content.Context
 import com.mdshahsamir.ovisharcinemahall.database.AppDatabase
 import com.mdshahsamir.ovisharcinemahall.network.ApiServiceGenerator
 import com.mdshahsamir.ovisharcinemahall.network.MovieAPIService
-import com.mdshahsamir.ovisharcinemahall.ui.dashboard.SharedRepository
-import com.mdshahsamir.ovisharcinemahall.ui.dashboard.SharedRepositoryIml
+import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardRepository
+import com.mdshahsamir.ovisharcinemahall.ui.dashboard.DashboardRepositoryIml
 
 class DashboardRepositoryInjector(private val context: Context) {
 
-    fun getSharedRepository(): SharedRepository {
-        return SharedRepositoryIml(getMovieApiService(), getMovieDao())
+    fun getSharedRepository(): DashboardRepository {
+        return DashboardRepositoryIml(getMovieApiService(), getMovieDao())
     }
 
     private fun getMovieApiService() =

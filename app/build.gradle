@@ -69,7 +69,7 @@ dependencies {
     kapt("androidx.room:room-compiler:$room_version")
 
     //hilt
-    implementation "com.google.dagger:hilt-android:2.44"
+    implementation "com.google.dagger:hilt-android:2.44.2"
     kapt "com.google.dagger:hilt-compiler:2.44"
 
     //Glide

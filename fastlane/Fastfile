@@ -21,14 +21,15 @@ platform :android do
     gradle(task: "test")
   end
 
-  desc "Submit a new Beta Build to Crashlytics Beta"
-  lane :beta do
-    gradle(task: "clean assembleRelease")
-    crashlytics
-  
-    # sh "your_script.sh"
-    # You can also use other beta testing services here
-  end
+    lane :beta do
+      gradle(task: "clean bundleRelease -PMYAPP_UPLOAD_STORE_PASSWORD=#{ENV['STORE_PASSWORD']} -PMYAPP_UPLOAD_KEY_PASSWORD=#{ENV['KEY_PASSWORD']}")
+      upload_to_google_drive(
+        drive_keyfile:File.join(Dir.pwd, 'drive_keyfile.json'),
+        service_account: true,
+        folder_id: '1zrMAxP1rXuvkF5l5PYCn378uR0z-yeUJ',
+        upload_files: ['app/build/outputs/bundle/release/app-release.aab']
+      )
+    end
 
   desc "Deploy a new version to the Google Play"
   lane :deploy do

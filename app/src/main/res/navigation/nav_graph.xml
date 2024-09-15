@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/movieListFragment">
+
+    <fragment
+        android:id="@+id/movieListFragment"
+        android:name="com.mdshahsamir.ovisharcinemahall.ui.dashboard.home.MovieListFragment"
+        android:label="@string/top_rated_movies"
+        tools:layout="@layout/fragment_movie_list" >
+        <action
+            android:id="@+id/action_movieListFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
+        <action
+            android:id="@+id/action_movieListFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/movieDetailsFragment"
+        android:name="com.mdshahsamir.ovisharcinemahall.ui.moviedetails.MovieDetailsFragment"
+        android:label="@string/movie_details"
+        tools:layout="@layout/fragment_movie_details" >
+        <argument
+            android:name="movieId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_movieDetailsFragment_self"
+            app:destination="@id/movieDetailsFragment"
+            app:launchSingleTop="true"/>
+        <argument
+            android:name="isOnWishList"
+            app:argType="boolean" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/wishlistFragment"
+        android:name="com.mdshahsamir.ovisharcinemahall.ui.dashboard.wishlist.WishlistFragment"
+        android:label="@string/wishlist"
+        tools:layout="@layout/fragment_wishlist" >
+        <action
+            android:id="@+id/action_wishlistFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.mdshahsamir.ovisharcinemahall.ui.search.SearchFragment"
+        android:label="@string/search_movies"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
+    </fragment>
+
+</navigation>
